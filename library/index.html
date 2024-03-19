@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/style.css">
+    <script src="scripts/script.js" defer></script>
+    <title>Library</title>
+</head>
+<body>
+    <h1>Your Library</h1>
+
+    <table id="library-table">
+        <tbody>
+            <tr class="library-table-header">
+                <th>Title</th>
+                <th>Author</th>
+                <th>Pages</th>
+                <th>Delete</th>
+                <th>Read</th>
+            </tr>
+        </tbody>
+    </table>
+
+    <button id="show-dialog-btn" class="btn">
+        Add a book
+    </button>
+
+    <dialog>
+        <button id="close-dialog-btn">
+            Close
+        </button>
+
+        <form>
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input id="title" name="title" type="text" placeholder="Book Title" required/>
+            </div>
+            <div class="form-group">
+                <label for="author">Author</label>
+                <input id="author" name="author" type="text" placeholder="Author Name" required/>
+            </div>
+            <div class="form-group">
+                <label for="pages">Number of Pages</label>
+                <input id="pages" name="pages" type="number" placeholder="Number of Pages" required/>
+            </div>
+            <button id="submit-book" type="submit">Add Book</button>
+        </form>
+    </dialog>
+</body>
+</html>
