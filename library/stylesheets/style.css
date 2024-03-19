@@ -86,8 +86,8 @@ dialog{
 
 #close-dialog-btn{
     position: absolute;
-    top: .5rem;
-    right: .5rem;
+    top: .8rem;
+    right: .8rem;
     background-color: white;
     color: red;
 }
@@ -96,15 +96,23 @@ dialog{
     background-color: var(--color-muted-grey);
 }
 
+/* FORM */
+
 form,
 .form-group{
     display: flex;
     flex-direction: column;
     gap: .5rem;
+    padding: .2rem;
 }
 
 .form-group{
     gap: .3rem;
+}
+
+.form-group-checkbox{
+    display: flex;
+    gap: .5rem;
 }
 
 .form-group input{

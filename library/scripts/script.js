@@ -16,6 +16,7 @@ class Book {
 const dialog = document.querySelector("dialog");
 const showButton = document.getElementById("show-dialog-btn");
 const closeButton = document.getElementById("close-dialog-btn");
+const bookForm = document.querySelector("form");
 const table = document.querySelector("table tbody");
 
 const redRising = new Book("Red Rising", "Pierce Brown", 382, true);
@@ -55,6 +56,21 @@ function createCell(content){
 
     return cell;
 }
+
+bookForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const title = document.getElementById('title').value;
+    const author = document.getElementById('author').value;
+    const pages = document.getElementById('pages').value;
+    const read = document.getElementById('read').checked;
+
+    const newBook = new Book(title, author, pages, read);
+
+    addBookToLibrary(newBook);
+    bookForm.reset();
+    dialog.close();
+});
 
 showButton.addEventListener("click", () => {
     dialog.showModal();
