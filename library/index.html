@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="stylesheets/style.css">
     <script src="scripts/script.js" defer></script>
     <title>Library</title>
 </head>
@@ -21,10 +21,11 @@
             </tr>
         </tbody>
     </table>
-
-    <button id="show-dialog-btn" class="btn">
-        Add a book
-    </button>
+    <div>
+        <button id="show-dialog-btn" class="btn">
+            Add a book
+        </button>
+    </div>
 
     <dialog>
         <button id="close-dialog-btn">
@@ -44,7 +45,9 @@
                 <label for="pages">Number of Pages</label>
                 <input id="pages" name="pages" type="number" placeholder="Number of Pages" required/>
             </div>
-            <button id="submit-book" type="submit">Add Book</button>
+            <div>
+                <button id="submit-book" type="submit" class="btn">Add Book</button>
+            </div>
         </form>
     </dialog>
 </body>
