@@ -32,6 +32,8 @@ function addBookToLibrary(book){
     bookIndex = library.indexOf(book);
 
     table.appendChild(createBookRow(book, bookIndex));
+    
+    updateDeleteButtonEventListeners();
 }
 
 function createBookRow(book, bookIndex){
@@ -42,7 +44,7 @@ function createBookRow(book, bookIndex){
     row.appendChild(createCell(book.title));
     row.appendChild(createCell(book.author));
     row.appendChild(createCell(book.pages));
-    row.appendChild(createCell("delete placeholder"));
+    row.appendChild(createButtonCell("Delete", "delete-button", bookIndex));
     row.appendChild(createCell(book.read));
 
     return row;
@@ -55,6 +57,35 @@ function createCell(content){
     cell.appendChild(cellContent);
 
     return cell;
+}
+
+function createButtonCell(buttonType, btnClass, bookIndex){
+    const cell = document.createElement('td');
+    const btn = document.createElement('button');
+
+    const btnContent = document.createTextNode(buttonType);
+
+    btn.dataset.bookIndex = bookIndex;
+    btn.classList.add(btnClass);
+
+    btn.appendChild(btnContent);
+    cell.appendChild(btn);
+
+    return cell;
+}
+
+function updateDeleteButtonEventListeners(){
+    let deleteButtons = document.querySelectorAll('.delete-button');
+
+    deleteButtons.forEach((btn) => {
+        btn.addEventListener('click', function() {
+            const bookIndex = this.dataset.bookIndex;
+            delete library[bookIndex];
+
+            const bookRow = btn.parentElement.parentElement;
+            bookRow.remove();
+        });
+    });
 }
 
 bookForm.addEventListener("submit", (event) => {
