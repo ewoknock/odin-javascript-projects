@@ -32,6 +32,14 @@ body{
     padding: 2rem;
 }
 
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+
 /* TABLE */
 
 table{
@@ -70,8 +78,17 @@ button{
     background-color: var(--color-primary);
 }
 
-.delete-button{
-    background-color: var(--color-primary);;
+.delete-button,
+.read-button{
+    background-color: transparent;
+}
+
+.delete-button:hover{
+    color: red;
+}
+
+.read-button:hover{
+    color: var(--color-green);
 }
 
 /* DIALOG */

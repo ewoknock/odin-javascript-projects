@@ -32,8 +32,9 @@ function addBookToLibrary(book){
     bookIndex = library.indexOf(book);
 
     table.appendChild(createBookRow(book, bookIndex));
-    
+
     updateDeleteButtonEventListeners();
+    updateReadButtonEventListeners();
 }
 
 function createBookRow(book, bookIndex){
@@ -44,8 +45,8 @@ function createBookRow(book, bookIndex){
     row.appendChild(createCell(book.title));
     row.appendChild(createCell(book.author));
     row.appendChild(createCell(book.pages));
-    row.appendChild(createButtonCell("Delete", "delete-button", bookIndex));
-    row.appendChild(createCell(book.read));
+    row.appendChild(createButtonCell("delete", "delete-button", bookIndex));
+    row.appendChild(createButtonCell(book.read, "read-button", bookIndex));
 
     return row;
 }
@@ -63,7 +64,7 @@ function createButtonCell(buttonType, btnClass, bookIndex){
     const cell = document.createElement('td');
     const btn = document.createElement('button');
 
-    const btnContent = document.createTextNode(buttonType);
+    let btnContent = setIcon(buttonType);
 
     btn.dataset.bookIndex = bookIndex;
     btn.classList.add(btnClass);
@@ -72,6 +73,25 @@ function createButtonCell(buttonType, btnClass, bookIndex){
     cell.appendChild(btn);
 
     return cell;
+}
+
+function setIcon(content){
+    const icon = document.createElement('span');
+    icon.classList.add('material-symbols-outlined');
+
+    switch(content) {
+        case 'delete':
+            icon.textContent = 'delete';
+            break;
+        case true:
+            icon.textContent = 'check_circle';
+            break;
+        case false:
+            icon.textContent = 'circle';
+            break;
+    }
+
+    return icon;
 }
 
 function updateDeleteButtonEventListeners(){
@@ -86,6 +106,24 @@ function updateDeleteButtonEventListeners(){
             bookRow.remove();
         });
     });
+}
+
+function updateReadButtonEventListeners(){
+    let readButtons = document.querySelectorAll('.read-button');
+
+    readButtons.forEach((btn) => {
+        btn.removeEventListener('click', toggleBookRead);
+        btn.addEventListener('click', toggleBookRead);
+
+    });
+}
+
+function toggleBookRead(){
+    const currentBook = library[this.dataset.bookIndex];
+
+    currentBook.toggleRead();
+
+    this.replaceChildren(setIcon(currentBook.read))
 }
 
 bookForm.addEventListener("submit", (event) => {
