@@ -16,6 +16,7 @@ const board = (function(){
     const createNewBoard = function(){
         gameOver = false;
         board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+        game.initPlayer1();
         for(let i = 0; i < board.length; i++){
             gridCells[i].textContent = "";
         }
@@ -84,6 +85,10 @@ const player2 = Player('Player 2', 'o');
 const game = (function(){
     let current_player = player1;
 
+    const initPlayer1 = function(){
+        current_player = player1;
+    }
+
     const switchPlayer = function(){
         current_player = current_player == player1 ? player2 : player1;
     }
@@ -93,14 +98,14 @@ const game = (function(){
     }
 
     return{
-        switchPlayer, getCurrentPlayer
+        switchPlayer, getCurrentPlayer, initPlayer1
     }
 })();
 
 /*  Event Handlers  */
 gridCellDom.forEach(gridCell => {
     gridCell.addEventListener('click', (event) => {
-        while(!board.isBoardFull()){
+        while(!board.isGameOver()){
             const index = event.target.dataset.index;
             if(!board.isValidMove(index)) return
             
@@ -110,6 +115,12 @@ gridCellDom.forEach(gridCell => {
                 const div = document.createElement('div')
                 div.classList.add('game-over');
                 div.append(`${winner} wins!`);
+                header.append(div);
+                return;
+            }else if(board.isBoardFull()){
+                const div = document.createElement('div')
+                div.classList.add('game-over');
+                div.append(`It\'s a tie!`);
                 header.append(div);
             }
             game.switchPlayer();
