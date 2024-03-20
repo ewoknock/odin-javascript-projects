@@ -3,6 +3,7 @@ const resetButton = document.querySelector('.reset');
 const gridCellDom = document.querySelectorAll('.grid__cell');
 const gridCells = Array.from(gridCellDom);
 const grid = document.querySelector(".grid");
+const header = document.querySelector(".header");
 
 let gameOver = false;
 
@@ -45,7 +46,7 @@ const board = (function(){
     const isGameOver = function(){
         let gameOver = false;
         gameOver = winStates.some(winState => {
-            if(removeDuplicates([board[winState[0]], board[winState[1]], board[winState[2]]]).length == 1 && board[winState[0] != 0])
+            if(removeDuplicates([board[winState[0]], board[winState[1]], board[winState[2]]]).length == 1 && board[winState[0]] != 0)
                 return true;
         });
         return gameOver;
@@ -76,8 +77,8 @@ const Player = (function(name, symbol){
     return {name, symbol}
 })
 
-const player1 = Player('player1', 'x');
-const player2 = Player('player2', 'o');
+const player1 = Player('Player 1', 'x');
+const player2 = Player('Player 2', 'o');
 
 /*  Game    */
 const game = (function(){
@@ -99,11 +100,18 @@ const game = (function(){
 /*  Event Handlers  */
 gridCellDom.forEach(gridCell => {
     gridCell.addEventListener('click', (event) => {
-        while(!board.isGameOver() || !board.isBoardFull){
+        while(!board.isBoardFull()){
             const index = event.target.dataset.index;
             if(!board.isValidMove(index)) return
             
             board.updateBoard(index, game.getCurrentPlayer());
+            if(board.isGameOver()){
+                winner = game.getCurrentPlayer().name;
+                const div = document.createElement('div')
+                div.classList.add('game-over');
+                div.append(`${winner} wins!`);
+                header.append(div);
+            }
             game.switchPlayer();
         }
     });
@@ -111,6 +119,10 @@ gridCellDom.forEach(gridCell => {
 
 resetButton.addEventListener('click', () => {
     board.createNewBoard();
+    let gameOverMsg = document.querySelector('.game-over');
+    if(document.contains(gameOverMsg)){
+        gameOverMsg.remove();
+    }
 });
 
 board.createNewBoard();

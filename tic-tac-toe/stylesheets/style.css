@@ -39,6 +39,12 @@ h1{
     text-align: center;
 }
 
+.game-over{
+    text-align: center;
+    font-size: 1.5rem;
+    padding: 1rem 0;
+}
+
 .reset{
     padding: .5rem 1rem;
 }
