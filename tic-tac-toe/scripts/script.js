@@ -1,6 +1,7 @@
 /*  Globals */
 const resetButton = document.querySelector('.reset');
-const gridCells = Array.from(document.querySelectorAll('.grid__cell'));
+const gridCellDom = document.querySelectorAll('.grid__cell');
+const gridCells = Array.from(gridCellDom);
 const grid = document.querySelector(".grid");
 
 let gameOver = false;
@@ -39,7 +40,7 @@ const board = (function(){
     const isGameOver = function(){
         let gameOver = false;
         gameOver = winStates.some(winState => {
-            if(removeDuplicates([board[winState[0]], board[winState[1]], board[winState[2]]]).length == 1)
+            if(removeDuplicates([board[winState[0]], board[winState[1]], board[winState[2]]]).length == 1 && board[winState[0] != 0])
                 return true;
         });
         return gameOver;
@@ -73,3 +74,21 @@ const Player = function(name, symbol){
 
 const player1 = Player('player1', 'x');
 const player2 = Player('player2', 'o');
+
+/*  Event Handlers  */
+gridCellDom.forEach(gridCell => {
+    console.log("hi");
+    gridCell.addEventListener('click', (event) => {
+        console.log(event);
+        console.log(board.isGameOver());
+        while(!board.isGameOver()){
+            event.target.innerText = "x"
+            break;
+        }
+    });
+})
+
+resetButton.addEventListener('click', () => {
+    board.createNewBoard();
+});
+
