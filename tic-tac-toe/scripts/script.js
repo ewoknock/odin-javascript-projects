@@ -36,12 +36,32 @@ const board = (function(){
         return board.every(item => item != 0);
     }
 
+    const isGameOver = function(){
+        let gameOver = false;
+        gameOver = winStates.some(winState => {
+            if(removeDuplicates([board[winState[0]], board[winState[1]], board[winState[2]]]).length == 1)
+                return true;
+        });
+        return gameOver;
+    }
+
+    function removeDuplicates(arr){
+        let uniq = arr.reduce(function (acc, curr){
+            if(!acc.includes(curr))
+                acc.push(curr);
+            return acc;
+        }, []);
+        console.log(uniq);
+        return uniq;
+    }
+
     return{
         createNewBoard,
         getBoard,
         updateBoard,
         isValidMove,
-        isBoardFull
+        isBoardFull,
+        isGameOver
     }
 })();
 
