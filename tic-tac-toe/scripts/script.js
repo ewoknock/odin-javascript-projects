@@ -7,7 +7,6 @@ const grid = document.querySelector(".grid");
 let gameOver = false;
 
 /*  Board   */
-
 const board = (function(){
     let board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
     let winStates = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6],
@@ -27,6 +26,12 @@ const board = (function(){
 
     const updateBoard = function(cell, current_player){
         board[cell] = current_player.symbol;
+
+        for(let i = 0; i < gridCells.length; i++){
+            if(board[i] != 0){
+                gridCells[i].innerText = board[i];
+            }
+        }
     }
 
     const isValidMove = function(cell){
@@ -52,7 +57,6 @@ const board = (function(){
                 acc.push(curr);
             return acc;
         }, []);
-        console.log(uniq);
         return uniq;
     }
 
@@ -68,22 +72,39 @@ const board = (function(){
 
 
 /*  Player  */
-const Player = function(name, symbol){
+const Player = (function(name, symbol){
     return {name, symbol}
-}
+})
 
 const player1 = Player('player1', 'x');
 const player2 = Player('player2', 'o');
 
+/*  Game    */
+const game = (function(){
+    let current_player = player1;
+
+    const switchPlayer = function(){
+        current_player = current_player == player1 ? player2 : player1;
+    }
+
+    const getCurrentPlayer = function(){
+        return current_player
+    }
+
+    return{
+        switchPlayer, getCurrentPlayer
+    }
+})();
+
 /*  Event Handlers  */
 gridCellDom.forEach(gridCell => {
-    console.log("hi");
     gridCell.addEventListener('click', (event) => {
-        console.log(event);
-        console.log(board.isGameOver());
-        while(!board.isGameOver()){
-            event.target.innerText = "x"
-            break;
+        while(!board.isGameOver() || !board.isBoardFull){
+            const index = event.target.dataset.index;
+            if(!board.isValidMove(index)) return
+            
+            board.updateBoard(index, game.getCurrentPlayer());
+            game.switchPlayer();
         }
     });
 })
@@ -92,3 +113,4 @@ resetButton.addEventListener('click', () => {
     board.createNewBoard();
 });
 
+board.createNewBoard();
