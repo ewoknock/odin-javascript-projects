@@ -87,7 +87,11 @@ nav button:hover,
     display: flex;
     justify-content: space-between;
     color: white;
-    border: 1px solid var(--color-muted-grey);
+    border: 1px solid rgb(155, 155, 155);
+}
+
+.card:hover{
+    border-color: white;
 }
 
 .card-content{

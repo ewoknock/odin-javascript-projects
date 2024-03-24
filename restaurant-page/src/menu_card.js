@@ -1,4 +1,3 @@
-
 let menuCard = (item, price, img) => {
     let card = document.createElement('div');
     card.classList.add('card');
