@@ -1,5 +1,7 @@
 import nav from './nav';
 import footer from './footer';
+import menuCard from './menu_card';
+import ribEyeA5 from './images/rib-eye-a5.png';
 
 let home = () => {
     let content = document.querySelector('body');
@@ -23,6 +25,8 @@ let home = () => {
     container.appendChild(tagline);
 
     content.appendChild(container);
+
+    content.appendChild(menuCard('Test', '$100', ribEyeA5));
 
     if(!document.querySelector('footer')){
         footer();
