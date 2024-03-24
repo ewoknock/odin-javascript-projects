@@ -1,7 +1,5 @@
 import nav from './nav';
 import footer from './footer';
-import menuCard from './menu_card';
-import ribEyeA5 from './images/rib-eye-a5.png';
 
 let home = () => {
     let content = document.querySelector('body');
@@ -24,9 +22,7 @@ let home = () => {
     tagline.innerText = `What is 10 KBBQ? This is a Korean restaurant where you can enjoy 10 different types of high quality wagyu beef at a BBQ table`;
     container.appendChild(tagline);
 
-    content.appendChild(container);
-
-    content.appendChild(menuCard('Test', '$100', ribEyeA5));
+    content.insertBefore(container, document.querySelector('footer'));
 
     if(!document.querySelector('footer')){
         footer();
