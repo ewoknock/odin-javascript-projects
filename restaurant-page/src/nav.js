@@ -8,18 +8,18 @@ let nav = () => {
     let menu = document.createElement('button');
     menu.innerText = "MENU";
     menu.id = 'menu';
-
+/*
     let about = document.createElement('button');
     about.innerText = "ABOUT";
     about.id = 'about';
-
+*/
     let contact = document.createElement('button');
     contact.innerText = "CONTACT";
     contact.id = 'contact';
 
     nav.appendChild(home);
     nav.appendChild(menu);
-    nav.appendChild(about);
+ //   nav.appendChild(about);
     nav.appendChild(contact);
 
     return nav;

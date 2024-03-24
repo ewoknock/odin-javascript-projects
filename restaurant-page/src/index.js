@@ -1,6 +1,6 @@
 import home from './home';
 import menu from './menu';
-import about from './about';
+//import about from './about';
 import contact from './contact';
 import clear from './clear';
 import './style.css';
@@ -20,11 +20,12 @@ menuButton.onclick= () => {
     menu();
 };
 
+/*
 let aboutButton = document.getElementById('about');
 aboutButton.onclick= () => {
     clear();
     about();
-};
+};*/
 
 let contactButton = document.getElementById('contact');
 contactButton.onclick= () => {
