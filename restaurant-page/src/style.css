@@ -28,9 +28,25 @@ html{
 body{
     background-color: var(--color-background);
     display: flex;
-    height: 100vh;
+    height: 100%;
     flex-direction: column;
     justify-content: space-between;
+}
+
+main{
+    color: var(--color-primary);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    gap: 2rem;
+}
+
+main h1,
+main p{
+    width: 40%;
+    text-align: center;
 }
 
 footer{
@@ -64,3 +80,4 @@ nav button:hover,
 {
     color: white;
 }
+
