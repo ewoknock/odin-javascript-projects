@@ -37,6 +37,7 @@ footer{
     background-color: var(--color-primary);
     padding: 2rem;
     text-align: center;
+    color: var(--color-background);
 }
 
 /*  Nav */
@@ -54,7 +55,7 @@ nav button{
     background: none;
     font-size: 1.3rem;
     font-weight: 700;
-    color: #323232;
+    color: var(--color-background);
     transition: color .4s ease;
 }
 
