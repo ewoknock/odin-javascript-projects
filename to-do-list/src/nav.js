@@ -36,6 +36,7 @@ let createNavContent = () => {
 
     let home = document.createElement('li');
     home.classList.add('project-link');
+    home.id = 'home';
     home.innerText = "Home";
 
     navContent.appendChild(home);
