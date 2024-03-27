@@ -7,8 +7,6 @@ let nav = () => {
     nav.appendChild(createNavHeader());
     nav.appendChild(createNavContent());
 
-
-
     return nav;
 };
 
@@ -43,7 +41,7 @@ let createNavContent = () => {
 
     let placeholder = document.createElement('li');
     placeholder.classList.add('project-link');
-    placeholder.innerText = "Placeholder";
+    placeholder.innerText = "Task Lists";
 
     navContent.appendChild(placeholder);
 
