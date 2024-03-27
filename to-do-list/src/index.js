@@ -1,6 +1,6 @@
 import nav from './nav';
 import { loadPage, bluePlus, blueMinus, populateDialog } from './display-controller';
-import { taskFactory, toggleCompleted } from './tasks.js'
+import { taskFactory, toggleCompleted, getProjects } from './tasks.js'
 import './style.css'
 
 
@@ -17,8 +17,8 @@ let content = document.querySelector('body');
 let main = document.createElement('main');
 
 content.appendChild(main);
-
-let navbar = nav();
+console.log(tasks);
+let navbar = nav(getProjects(tasks));
 main.appendChild(navbar);
 
 loadPage("Home", tasks, bluePlus);

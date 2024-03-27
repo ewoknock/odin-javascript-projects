@@ -1,11 +1,12 @@
 import todoLogo from './images/icons8-clipboard-64.png'
+import { getProjects } from './tasks';
 
-let nav = () => {
+let nav = (projects) => {
     let nav = document.createElement('aside');
     nav.id = 'sidebar';
 
     nav.appendChild(createNavHeader());
-    nav.appendChild(createNavContent());
+    nav.appendChild(createNavContent(projects));
 
     return nav;
 };
@@ -28,9 +29,11 @@ let createNavHeader = () => {
     return navHeader;
 }
 
-let createNavContent = () => {
+let createNavContent = (projects) => {
     let navContent = document.createElement('ul');
     navContent.classList.add('project-list');
+
+    console.log(projects);
 
     let home = document.createElement('li');
     home.classList.add('project-link');
@@ -39,11 +42,17 @@ let createNavContent = () => {
 
     navContent.appendChild(home);
 
-    let placeholder = document.createElement('li');
-    placeholder.classList.add('project-link');
-    placeholder.innerText = "Task Lists";
+    projects.forEach(project => {
+        navContent.appendChild(createProjectLink(project));
+    });
 
-    navContent.appendChild(placeholder);
+   return navContent;
+}
 
-    return navContent;
+let createProjectLink = (project) => {
+    let listItem = document.createElement('li');
+    listItem.classList.add('project-link');
+    listItem.innerText = project;
+
+    return listItem;
 }
