@@ -1,6 +1,6 @@
 import nav from './nav';
 import { loadPage, bluePlus, blueMinus, populateDialog } from './display-controller';
-import { taskFactory, toggleCompleted, getProjects } from './tasks.js'
+import { taskFactory, toggleCompleted, getProjects, filterTasksByProject } from './tasks.js'
 import './style.css'
 
 
@@ -25,9 +25,11 @@ loadPage("Home", tasks, bluePlus);
 
 const newTaskButton = document.getElementById('new-task-button');
 const closeButtons = document.querySelectorAll('#close-dialog-btn');
-const collapseButtons = document.querySelectorAll('.collapse-button');
 const completeCheckboxes = document.querySelectorAll('.complete-checkbox');
 const editButtons = document.querySelectorAll('.edit-button');
+const projectLinks = document.querySelectorAll(".project-link");
+
+console.log(projectLinks);
 
 newTaskButton.addEventListener("click", () => {
     newTaskDialog.showModal();
@@ -52,6 +54,7 @@ newTaskForm.addEventListener("submit", (event) => {
 
     tasks.push(newTask);
     localStorage.setItem('tasks', JSON.stringify(tasks));
+    setSidebarListeners();
 
     newTaskForm.reset();
     newTaskDialog.close();
@@ -72,23 +75,29 @@ editTaskForm.addEventListener("submit", (event) => {
 
     tasks[index] = task;
     localStorage.setItem('tasks', JSON.stringify(tasks));
+    setSidebarListeners();
 
     editTaskForm.reset();
     editTaskDialog.close();
 });
 
-collapseButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-        let content = button.parentElement.nextElementSibling;
-        if(content.style.display === "flex"){
-            content.style.display = "none";
-            button.innerHTML = bluePlus;
-        } else{
-            content.style.display = "flex";
-            button.textContent = blueMinus;
-        }
+const setSidebarListeners = () => {
+    const collapseButtons = document.querySelectorAll('.collapse-button');
+
+    collapseButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+            let content = button.parentElement.nextElementSibling;
+            if(content.style.display === "flex"){
+                content.style.display = "none";
+                button.innerHTML = bluePlus;
+            } else{
+                content.style.display = "flex";
+                button.textContent = blueMinus;
+            }
+        });
     });
-});
+}
+
 
 completeCheckboxes.forEach((checkbox) => {
     checkbox.addEventListener("click", () => {
@@ -106,5 +115,19 @@ editButtons.forEach((button) => {
     });
 });
 
-
+projectLinks.forEach((link) => {
+    link.addEventListener(("click"), () => {
+        let project  = link.textContent;
+        if(project == "Home"){
+            loadPage(project, tasks, bluePlus);
+            setSidebarListeners();
+        }
+        else{
+            loadPage(project, filterTasksByProject(tasks, project), bluePlus);
+            setSidebarListeners();
+        }
+    });
+});
 export { bluePlus }
+
+setSidebarListeners();

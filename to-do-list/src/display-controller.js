@@ -5,11 +5,18 @@ const bluePlus = '\u2295';
 const blueMinus = '\u2296'
 
 const loadPage = (title, arr) => {
-    console.log(arr);
     let main = document.querySelector('main');
+    
+    let content = document.querySelector('section');
 
-    let content = document.createElement('section');
-    content.classList.add('container');
+    if(main.contains(content)){
+        content.innerHTML = "";
+    }
+    else{
+        content = document.createElement('section');
+        content.classList.add('container');
+    }
+
     
     content.appendChild(pageNav(title));
 

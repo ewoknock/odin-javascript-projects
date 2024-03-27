@@ -17,4 +17,9 @@ const toggleCompleted = (arr, index) => {
     arr[index].completed = !arr[index].completed;   
 }
 
-export { taskFactory, getProjects, toggleCompleted }
+const filterTasksByProject = (arr, project = "") => {
+    let tasks = arr.filter(task => task.project === project);
+    return tasks;
+}
+
+export { taskFactory, getProjects, toggleCompleted, filterTasksByProject }
