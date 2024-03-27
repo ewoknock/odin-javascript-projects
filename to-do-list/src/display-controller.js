@@ -1,4 +1,5 @@
 import AddIcon from './images/icons8-add-50.png'
+import EditIcon from './images/icons8-edit-32.png'
 
 const bluePlus = '\u2295';
 const blueMinus = '\u2296'
@@ -28,7 +29,6 @@ const pageNav = (header) => {
 
     let buttonIcon = new Image();
     buttonIcon.src = AddIcon;
-    console.log(buttonIcon);
 
     let addTaskButton = document.createElement('button');
     addTaskButton.classList.add('taskBtn');
@@ -61,7 +61,7 @@ const createTaskCard = (item, index) => {
     cardContent.classList.add('card-content');
 
     cardContent.appendChild(createCardHeader(item, index));
-    cardContent.appendChild(createCardDetails(item));
+    cardContent.appendChild(createCardDetails(item, index));
 
     card.appendChild(cardContent);
 
@@ -97,7 +97,7 @@ const createCardHeader = (item, index) => {
     return cardContentHeader;
 }
 
-const createCardDetails = (item) => {
+const createCardDetails = (item, index) => {
     let cardContentDetails = document.createElement('div');
     cardContentDetails.classList.add('card-content-details');
 
@@ -105,9 +105,19 @@ const createCardDetails = (item) => {
     let projectInfo = createCardDetailInfo("Project:", item.project);
     let descriptionInfo = createCardDetailInfo("Description:", item.description);
 
+    let editIcon = new Image();
+    editIcon.src = EditIcon;
+
+    let editButton = document.createElement('button');
+    editButton.classList.add("edit-button");
+    editButton.id = "edit-button";
+    editButton.appendChild(editIcon); 
+    editButton.setAttribute("data-index", index);
+
     cardContentDetails.appendChild(dateInfo);
     cardContentDetails.appendChild(projectInfo);
     cardContentDetails.appendChild(descriptionInfo);
+    cardContentDetails.appendChild(editButton);
 
     return cardContentDetails;
 }
@@ -132,4 +142,24 @@ const createCardDetailInfo = (label, content) => {
     return detailContainer;
 }
 
-export { loadPage, bluePlus, blueMinus }
+const populateDialog = (index, item) => {
+    let form = document.querySelector("#edit-task-form");
+
+    let hidden = document.createElement('input');
+    hidden.type = 'hidden';
+    hidden.value = index;
+
+    form.appendChild(hidden);
+
+    const title = form.querySelector('#title');
+    title.value = item.title;
+    const date = form.querySelector('#date');
+    date.value = item.dueDate;
+    const project = form.querySelector('#project');
+    project.value = item.project;
+    const description = form.querySelector('#description');
+    description.value = item.description;
+
+}
+
+export { loadPage, bluePlus, blueMinus, populateDialog }

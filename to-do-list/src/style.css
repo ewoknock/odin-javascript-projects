@@ -194,12 +194,24 @@ input:focus{
     font-size: 1.5rem;
 }
 
-.collapse-button:hover{
+.collapse-button:hover,
+.edit-button:hover{
     background-color: var(--color-primary);
 }
 
 .taskBtn{
     background-color: var(--color-primary) !important;
+}
+
+.edit-button{
+    background-color: var(--color-white);
+    border: none;
+    border-radius: 2rem;
+    padding: .5rem;
+}
+
+.edit-button img{
+    width: 20px;
 }
 
 /*  TASK CARD   */
