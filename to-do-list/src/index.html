@@ -6,5 +6,31 @@
     <title>ToDoList</title>
 </head>
 <body>
+
+    <dialog>
+        <button id="close-dialog-btn">
+            X
+        </button>
+
+        <form method="dialog">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input id="title" name="title" type="text" placeholder="Title" required/>
+            </div>
+            <div class="form-group">
+                <label for="date">Due Date</label>
+                <input id="date" name="date" type="date" placeholder="mm/dd/yyyy" required/>
+            </div>
+            <div class="form-group">
+                <label for="project">Project</label>
+                <input id="project" name="project" type="text" placeholder="Project Name" required/>
+            </div>
+            <div class="form-group-description">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" cols="30" rows="10" required></textarea>
+            </div>
+            <button id="submit-task" type="submit" class="btn">Create Task</button>
+        </form>
+    </dialog>
 </body>
 </html>

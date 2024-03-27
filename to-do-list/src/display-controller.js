@@ -29,6 +29,7 @@ const pageNav = (header) => {
 
     let addTaskButton = document.createElement('button');
     addTaskButton.classList.add('btn', 'taskBtn');
+    addTaskButton.id = "new-task-button"
     addTaskButton.appendChild(buttonIcon);
 
     nav.appendChild(navHeader);
