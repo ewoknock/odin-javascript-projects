@@ -1,10 +1,9 @@
 import nav from './nav';
-import { loadPage } from './display-controller';
-import { taskFactory } from './tasks.js'
+import { loadPage, bluePlus, blueMinus } from './display-controller';
+import { taskFactory, toggleCompleted } from './tasks.js'
 import './style.css'
 
-const bluePlus = '\u2295';
-const blueMinus = '\u2296'
+
 
 const dialog = document.querySelector("dialog");
 const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
@@ -24,6 +23,7 @@ loadPage("Home", tasks, bluePlus);
 const newTaskButton = document.getElementById('new-task-button');
 const closeButton = document.getElementById('close-dialog-btn');
 const collapseButtons = document.querySelectorAll('.collapse-button');
+const completeCheckboxes = document.querySelectorAll('.complete-checkbox');
 
 newTaskButton.addEventListener("click", () => {
     dialog.showModal();
@@ -61,6 +61,14 @@ collapseButtons.forEach((button) => {
             button.textContent = blueMinus;
         }
     });
-})
+});
+
+completeCheckboxes.forEach((checkbox) => {
+    checkbox.addEventListener("click", () => {
+        let index = checkbox.dataset.index;
+        toggleCompleted(tasks, index);
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    })
+});
 
 export { bluePlus }

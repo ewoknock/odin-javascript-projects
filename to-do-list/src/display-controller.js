@@ -46,21 +46,21 @@ const populateTasks = (arr) => {
     let tasks = document.createElement('section');
     tasks.classList.add('tasks-container');
 
-    arr.forEach((item) => {
-        tasks.appendChild(createTaskCard(item));
+    arr.forEach((item, index) => {
+        tasks.appendChild(createTaskCard(item, index));
     });
 
     return tasks;
 }
 
-const createTaskCard = (item) => {
+const createTaskCard = (item, index) => {
     let card = document.createElement('div');
     card.classList.add('card');
 
     let cardContent = document.createElement('div');
     cardContent.classList.add('card-content');
 
-    cardContent.appendChild(createCardHeader(item));
+    cardContent.appendChild(createCardHeader(item, index));
     cardContent.appendChild(createCardDetails(item));
 
     card.appendChild(cardContent);
@@ -68,11 +68,13 @@ const createTaskCard = (item) => {
     return card;
 }
 
-const createCardHeader = (item) => {
+const createCardHeader = (item, index) => {
     let cardContentHeader = document.createElement('div');
     cardContentHeader.classList.add('card-content-header');
 
     let completedContainer = document.createElement('input');
+    completedContainer.setAttribute('data-index', index);
+    completedContainer.classList.add('complete-checkbox');
     completedContainer.type = "checkbox"
     completedContainer.checked = item.completed;
 
