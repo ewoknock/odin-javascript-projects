@@ -16,3 +16,5 @@ const getProjects = (arr) => {
 const toggleCompleted = (arr, index) => {
     arr[index].completed = !arr[index].completed;   
 }
+
+export { taskFactory, getProjects, toggleCompleted }
