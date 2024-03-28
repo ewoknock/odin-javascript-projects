@@ -1,11 +1,16 @@
-const taskFactory = (title, description, dueDate, project) => {
+const taskFactory = (title, description, dueDate, project, id) => {
     return {
         title, 
         description, 
         dueDate, 
         project, 
+        id,
         completed: false
     }
+}
+
+const setId = (arr, index) => {
+    arr[index].id = index;   
 }
 
 const getProjects = (arr) => {
@@ -22,4 +27,4 @@ const filterTasksByProject = (arr, project = "") => {
     return tasks;
 }
 
-export { taskFactory, getProjects, toggleCompleted, filterTasksByProject }
+export { taskFactory, getProjects, toggleCompleted, filterTasksByProject, setId }

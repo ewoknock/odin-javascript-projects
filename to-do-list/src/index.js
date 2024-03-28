@@ -1,6 +1,6 @@
 import nav from './nav';
 import { loadPage, bluePlus, blueMinus, populateDialog } from './display-controller';
-import { taskFactory, toggleCompleted, getProjects, filterTasksByProject } from './tasks.js'
+import { taskFactory, toggleCompleted, getProjects, filterTasksByProject, setId } from './tasks.js'
 import './style.css'
 
 
@@ -26,7 +26,6 @@ loadPage("Home", tasks, bluePlus);
 const newTaskButton = document.getElementById('new-task-button');
 const closeButtons = document.querySelectorAll('#close-dialog-btn');
 const completeCheckboxes = document.querySelectorAll('.complete-checkbox');
-const editButtons = document.querySelectorAll('.edit-button');
 const projectLinks = document.querySelectorAll(".project-link");
 
 console.log(projectLinks);
@@ -50,20 +49,21 @@ newTaskForm.addEventListener("submit", (event) => {
     let project = document.getElementById('project').value;
     let description = document.getElementById('description').value;
 
-    let newTask = taskFactory(title, description, date, project);
+    let newTask = taskFactory(title, description, date, project, tasks.length);
 
     tasks.push(newTask);
     localStorage.setItem('tasks', JSON.stringify(tasks));
-    setSidebarListeners();
+    updateEventListeners();
 
     newTaskForm.reset();
     newTaskDialog.close();
+    loadPage(project, filterTasksByProject(tasks, project), bluePlus);
+    updateEventListeners();
 });
-
 
 editTaskForm.addEventListener("submit", (event) => {
     event.preventDefault();
-;
+
     let title = event.target.querySelector('#title').value;
     let date = event.target.querySelector('#date').value;
     let project = event.target.querySelector('#project').value;
@@ -79,9 +79,11 @@ editTaskForm.addEventListener("submit", (event) => {
 
     editTaskForm.reset();
     editTaskDialog.close();
+    loadPage(project, filterTasksByProject(tasks, project), bluePlus);
+    setSidebarListeners();
 });
 
-const setSidebarListeners = () => {
+const setCollapseButtonListeners = () => {
     const collapseButtons = document.querySelectorAll('.collapse-button');
 
     collapseButtons.forEach((button) => {
@@ -98,6 +100,22 @@ const setSidebarListeners = () => {
     });
 }
 
+const setEditButtonListeners = () => {
+    const editButtons = document.querySelectorAll('.edit-button');
+
+    editButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+            let index = button.dataset.index;
+            editTaskDialog.showModal();
+            populateDialog(tasks[index]);
+        });
+    });
+}
+
+const updateEventListeners = () => {
+    setCollapseButtonListeners();
+    setEditButtonListeners();
+}
 
 completeCheckboxes.forEach((checkbox) => {
     checkbox.addEventListener("click", () => {
@@ -107,27 +125,21 @@ completeCheckboxes.forEach((checkbox) => {
     })
 });
 
-editButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-        let index = button.dataset.index;
-        editTaskDialog.showModal();
-        populateDialog(index, tasks[index]);
-    });
-});
+
 
 projectLinks.forEach((link) => {
     link.addEventListener(("click"), () => {
         let project  = link.textContent;
         if(project == "Home"){
             loadPage(project, tasks, bluePlus);
-            setSidebarListeners();
+            updateEventListeners();
         }
         else{
             loadPage(project, filterTasksByProject(tasks, project), bluePlus);
-            setSidebarListeners();
+            updateEventListeners();
         }
     });
 });
 export { bluePlus }
 
-setSidebarListeners();
+updateEventListeners();

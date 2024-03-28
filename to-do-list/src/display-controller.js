@@ -53,34 +53,34 @@ const populateTasks = (arr) => {
     let tasks = document.createElement('section');
     tasks.classList.add('tasks-container');
 
-    arr.forEach((item, index) => {
-        tasks.appendChild(createTaskCard(item, index));
+    arr.forEach((item) => {
+        tasks.appendChild(createTaskCard(item));
     });
 
     return tasks;
 }
 
-const createTaskCard = (item, index) => {
+const createTaskCard = (item) => {
     let card = document.createElement('div');
     card.classList.add('card');
 
     let cardContent = document.createElement('div');
     cardContent.classList.add('card-content');
 
-    cardContent.appendChild(createCardHeader(item, index));
-    cardContent.appendChild(createCardDetails(item, index));
+    cardContent.appendChild(createCardHeader(item));
+    cardContent.appendChild(createCardDetails(item));
 
     card.appendChild(cardContent);
 
     return card;
 }
 
-const createCardHeader = (item, index) => {
+const createCardHeader = (item) => {
     let cardContentHeader = document.createElement('div');
     cardContentHeader.classList.add('card-content-header');
 
     let completedContainer = document.createElement('input');
-    completedContainer.setAttribute('data-index', index);
+    completedContainer.setAttribute('data-index', item.id);
     completedContainer.classList.add('complete-checkbox');
     completedContainer.type = "checkbox"
     completedContainer.checked = item.completed;
@@ -104,7 +104,8 @@ const createCardHeader = (item, index) => {
     return cardContentHeader;
 }
 
-const createCardDetails = (item, index) => {
+const createCardDetails = (item) => {
+    console.log(item);
     let cardContentDetails = document.createElement('div');
     cardContentDetails.classList.add('card-content-details');
 
@@ -119,7 +120,7 @@ const createCardDetails = (item, index) => {
     editButton.classList.add("edit-button");
     editButton.id = "edit-button";
     editButton.appendChild(editIcon); 
-    editButton.setAttribute("data-index", index);
+    editButton.setAttribute("data-index", item.id);
 
     cardContentDetails.appendChild(dateInfo);
     cardContentDetails.appendChild(projectInfo);
@@ -149,12 +150,12 @@ const createCardDetailInfo = (label, content) => {
     return detailContainer;
 }
 
-const populateDialog = (index, item) => {
+const populateDialog = (item) => {
     let form = document.querySelector("#edit-task-form");
 
     let hidden = document.createElement('input');
     hidden.type = 'hidden';
-    hidden.value = index;
+    hidden.value = item.id;
 
     form.appendChild(hidden);
 
