@@ -8,6 +8,12 @@ import './style.css'
 const newTaskDialog = document.getElementById("new-dialog");
 const editTaskDialog = document.getElementById("edit-dialog");
 const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+/*
+tasks.forEach((task, index) => {
+    setId(tasks, index);
+});
+localStorage.setItem('tasks', JSON.stringify(tasks));*/
+
 const newTaskForm = document.querySelector("#new-task-form");
 const editTaskForm = document.querySelector("#edit-task-form");
 
@@ -68,19 +74,18 @@ editTaskForm.addEventListener("submit", (event) => {
     let date = event.target.querySelector('#date').value;
     let project = event.target.querySelector('#project').value;
     let description = event.target.querySelector('#description').value;
-
     let index = document.querySelector('input[type = "hidden"]').value;
     
-    let task = taskFactory(title, description, date, project);
+    let task = taskFactory(title, description, date, project, index);
 
     tasks[index] = task;
     localStorage.setItem('tasks', JSON.stringify(tasks));
-    setSidebarListeners();
+    updateEventListeners();
 
     editTaskForm.reset();
     editTaskDialog.close();
     loadPage(project, filterTasksByProject(tasks, project), bluePlus);
-    setSidebarListeners();
+    updateEventListeners();
 });
 
 const setCollapseButtonListeners = () => {
