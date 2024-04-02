@@ -26,7 +26,7 @@ const makeCard = async(cardContainer, city) => {
 
     const cardTemperature = document.createElement('div')
     cardTemperature.classList.add('card-temperature')
-    cardTemperature.append(`${unitsManager.getTemperature(cityWeather.main.temp)}°F`)
+    cardTemperature.append(`${unitsManager.getTemperature(cityWeather.main.temp)}°${unitsManager.getUnits()}`)
     card.append(cardTemperature)
 
     card.addEventListener('click', async() => {
