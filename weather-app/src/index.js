@@ -1,10 +1,8 @@
 import { getCityList } from './weatherAPI';
-import { makeCityCards, clearContent } from './display';
+import { clearContent, addContent } from './display';
+import makeCityCards from './cityCards'
 import './style.css';
 
-
-const content = document.querySelector('body');
-const main = document.querySelector('main');
 const searchBar = document.querySelector('#city');
 
 searchBar.addEventListener('keydown', async(e) => {
@@ -14,7 +12,8 @@ searchBar.addEventListener('keydown', async(e) => {
         clearContent();
 
         const cityInfo = await getCityList()
-        makeCityCards(cityInfo)
+        const content = await makeCityCards(cityInfo)
+        addContent(content)
 
 
     }
