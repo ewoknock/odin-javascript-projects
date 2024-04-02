@@ -8,6 +8,14 @@ const getCityList = async() => {
     return cityList;
 }
 
+const getCityWeather = async (latitude, longitude) => {
+    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`)
+    const cityWeather = await response.json();
+
+    return cityWeather;
+}
+
 export{
     getCityList,
+    getCityWeather,
 }
