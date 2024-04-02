@@ -1,6 +1,6 @@
 import { clearContent } from "./display";
 import makeDetailsPage from "./cityDetailsPage";
-import { getCityWeather } from "./weatherAPI";
+import { getCityWeather, getCityForecast } from "./weatherAPI";
 
 const makeCard = (cardContainer, city) => {
     const card = document.createElement('div')
@@ -14,9 +14,10 @@ const makeCard = (cardContainer, city) => {
 
     card.addEventListener('click', async() => {
         const {latitude, longitude} = card.dataset
-        const cityWeather = await getCityWeather(latitude, longitude);
-        clearContent();
-        makeDetailsPage(cityWeather);
+        const cityWeather = await getCityWeather(latitude, longitude)
+        const cityForecast = await getCityForecast(latitude, longitude)
+        clearContent()
+        makeDetailsPage(cityWeather, cityForecast.list.slice(0,5))
     })
     card.append(cardHeader)
     cardContainer.append(card)
@@ -27,7 +28,7 @@ const makeCityCards = (cityList) => {
     const cardContainer = document.createElement('div')
     cardContainer.classList.add('card-container')
 
-    cityList.forEach((city, index) => makeCard(cardContainer, city, index));
+    cityList.forEach((city, index) => makeCard(cardContainer, city, index))
 
     return cardContainer
 }
