@@ -12,18 +12,32 @@
         </div>
 
         <div class="nav-search">
-            <input class="nav-search-bar" id="city" type="text" placeholder="Search City or Zipe Code">
+            <input class="nav-search-bar" id="city" type="text" placeholder="Search City">
         </div>
         <div class="nav-actions">
-            <button class="nav-temp-celsius">°C</button>
-            <div>/</div>
-            <button class="nav-temp-fahrenheit">°F</button>
+            <span class="nav-temp-selector">
+                <button class="nav-temp-celsius">°C</button><span>/</span><button class="nav-temp-fahrenheit">°F</button>
+            </span>
         </div>
     </nav>
 
     <main class="content">
 
+
     </main>
+
+
+    <template id="details-template">
+        <section class="details">
+            <div class="details-summary">
+                <div class="details-summary-header"></div>
+                <div class="details-summary-content">
+                    <div class="content-temperature"></div>
+                    <div class="content-weather"></div>
+                    <div class="content-high-low"></div>
+                </div>
+            </div>
+        </section>
+    </template>
 </body>
 </html>
-
