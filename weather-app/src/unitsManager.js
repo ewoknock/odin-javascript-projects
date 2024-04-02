@@ -1,3 +1,5 @@
+import { kelvinToCelsius, kelvinToFahrenheit } from "./DataConvertor";
+
 const unitsManager = (() => {
     let units = 'Fahrenheit'
 
@@ -7,8 +9,10 @@ const unitsManager = (() => {
         units = unit;
     }
 
+    const getTemperature = (temp) => (units === 'Fahrenheit' ? kelvinToFahrenheit(temp) : kelvinToCelsius(temp))
+
     return {
-        getUnits, setUnits
+        getUnits, setUnits, getTemperature
     }
 })()
 

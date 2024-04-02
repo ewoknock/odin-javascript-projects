@@ -1,7 +1,7 @@
 import { clearContent } from "./display";
 import makeDetailsPage from "./cityDetailsPage";
 import { getCityWeather, getCityForecast } from "./weatherAPI";
-import { kelvinToFahrenheit } from "./DataConvertor";
+import unitsManager from './unitsManager'
 
 const makeCard = async(cardContainer, city) => {
     const card = document.createElement('div')
@@ -26,7 +26,7 @@ const makeCard = async(cardContainer, city) => {
 
     const cardTemperature = document.createElement('div')
     cardTemperature.classList.add('card-temperature')
-    cardTemperature.append(`${kelvinToFahrenheit(cityWeather.main.temp)}°F`)
+    cardTemperature.append(`${unitsManager.getTemperature(cityWeather.main.temp)}°F`)
     card.append(cardTemperature)
 
     card.addEventListener('click', async() => {

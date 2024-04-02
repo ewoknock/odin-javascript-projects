@@ -1,4 +1,5 @@
-import { kelvinToCelsius, kelvinToFahrenheit, formatTimestamp } from "./DataConvertor"
+import { formatTimestamp } from "./DataConvertor"
+import unitsManager from "./unitsManager"
 
 const makeDetailsSummaryCard = (cityWeather) => {
     const currentTime = new Date(Date.now())
@@ -7,13 +8,13 @@ const makeDetailsSummaryCard = (cityWeather) => {
     detailsSummaryHeader.innerHTML = `<strong>${cityWeather.name}</strong> <span>as of ${currentTime.toLocaleTimeString()}</span>`
 
     const detailsTemperature = document.querySelector('.content-temperature')
-    detailsTemperature.innerText = `${kelvinToFahrenheit(cityWeather.main.temp)}°`
+    detailsTemperature.innerText = `${unitsManager.getTemperature(cityWeather.main.temp)}°`
     
     const detailsWeather = document.querySelector('.content-weather')
     detailsWeather.innerText = `${cityWeather.weather[0].main}`
 
     const detailsHighLow = document.querySelector('.content-high-low')
-    detailsHighLow.innerText = `High ${kelvinToFahrenheit(cityWeather.main.temp_max)}° • Low ${kelvinToFahrenheit(cityWeather.main.temp_min)}°`
+    detailsHighLow.innerText = `High ${unitsManager.getTemperature(cityWeather.main.temp_max)}° • Low ${unitsManager.getTemperature(cityWeather.main.temp_min)}°`
 }
 
 const createTableCell = (cellClass, value) => {
@@ -29,7 +30,7 @@ const makeHourlyForecastCard = (cityForecast) => {
     cityForecast.forEach((weather) => {
         const time = formatTimestamp(new Date(weather.dt * 1000))
         const weatherCode = weather.weather[0].main
-        const temperature = `${kelvinToFahrenheit(weather.main.temp)}°`
+        const temperature = `${unitsManager.getTemperature(weather.main.temp)}°`
 
         const forecastRow = document.createElement('tr')
 
