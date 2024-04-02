@@ -108,6 +108,7 @@ nav{
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
     color: var(--color-white);
     background-color: var(--color-blue);
     border-radius: var(--border-radius);
@@ -118,6 +119,11 @@ nav{
 .card-header{
     font-size: 2rem;
     text-align: center;
+}
+
+.card div{
+    font-size: 2rem;
+    font-weight: 500;
 }
 
 
