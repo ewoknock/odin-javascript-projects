@@ -64,10 +64,14 @@ nav{
     overflow: visible;
 }
 
-.nav-actions{
+.nav-temp-selector{
     display: flex;
-    gap: .3rem;
     align-items: center;
+    gap: .3rem;
+}
+
+.nav-temp-selector span{
+    padding-bottom: .4rem;
 }
 
 .nav-actions button{
@@ -83,7 +87,8 @@ nav{
     padding-bottom: .1rem;
 }
 
-.nav-actions button:hover{
+.nav-actions button:hover,
+.active{
     text-decoration: underline;
     text-underline-offset: .3rem;
 }
@@ -133,7 +138,7 @@ nav{
     box-shadow: var(--box-shadow);
     padding: 1rem;
     gap: .5rem;
-    width: 40%;
+    width: 60%;
 }
 
 .details-summary-header{
