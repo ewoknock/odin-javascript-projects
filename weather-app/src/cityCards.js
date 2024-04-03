@@ -3,14 +3,13 @@ import weatherAPI from "./weatherAPI";
 import unitsManager from './unitsManager'
 import currentPage from "./currentPage";
 import { clearContent } from "./display";
+import getWeatherIcon from "./getWeatherIcon";
 
 const makeCard = async(cardContainer, city) => {
     const card = document.createElement('div')
     card.classList.add('card')
     card.setAttribute('data-latitude', city.lat)
     card.setAttribute('data-longitude', city.lon)
-
-
 
     const cardHeader = document.createElement('h1')
     cardHeader.classList.add('card-header')
@@ -23,9 +22,9 @@ const makeCard = async(cardContainer, city) => {
     await weatherAPI.setCityWeather(latitude, longitude)
     let cityWeather = weatherAPI.getCityWeather()
 
-    const cardWeather = document.createElement('div')
+    const cardWeather = new Image();
     cardWeather.classList.add('card-weather')
-    cardWeather.append(cityWeather.weather[0].main)
+    cardWeather.src = getWeatherIcon(cityWeather.weather[0].main)
     card.append(cardWeather)
 
     const cardTemperature = document.createElement('div')

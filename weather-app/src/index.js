@@ -35,7 +35,6 @@ searchBar.addEventListener('keydown', async(e) => {
         clearContent();
 
         await weatherAPI.setCityList()
-        await weatherAPI.setCityWeather()
         clearContent();
         makeCityCards()
     }

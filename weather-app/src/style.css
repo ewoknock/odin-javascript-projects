@@ -163,6 +163,11 @@ nav{
 
 .details-summary-content{
     display: flex;
+    justify-content: space-between;
+}
+
+.details-summary-section{
+    display: flex;
     flex-direction: column;
     font-weight: 700;
     gap: .1rem;
@@ -172,7 +177,15 @@ nav{
     font-size: 3rem;
 }
 
+.content-weather img{
+    width: 75px;
+}
+
 /*  Hourly Forecast Card    */
 td{
     text-align: center;
+}
+
+.hourly-weather img{
+    width: 30px;
 }

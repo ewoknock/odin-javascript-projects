@@ -2,6 +2,7 @@ import { formatTimestamp } from "./DataConvertor"
 import unitsManager from "./unitsManager"
 import currentPage from "./currentPage"
 import weatherAPI from "./weatherAPI"
+import getWeatherIcon from "./getWeatherIcon"
 
 const makeDetailsSummaryCard = (cityWeather) => {
     const currentTime = new Date(Date.now())
@@ -13,7 +14,9 @@ const makeDetailsSummaryCard = (cityWeather) => {
     detailsTemperature.innerText = `${unitsManager.getTemperature(cityWeather.main.temp)}°`
     
     const detailsWeather = document.querySelector('.content-weather')
-    detailsWeather.innerText = `${cityWeather.weather[0].main}`
+    const weatherIcon = new Image();
+    weatherIcon.src = getWeatherIcon(cityWeather.weather[0].main)
+    detailsWeather.append(weatherIcon)
 
     const detailsHighLow = document.querySelector('.content-high-low')
     detailsHighLow.innerText = `High ${unitsManager.getTemperature(cityWeather.main.temp_max)}° • Low ${unitsManager.getTemperature(cityWeather.main.temp_min)}°`
@@ -31,7 +34,8 @@ const makeHourlyForecastCard = (cityForecast) => {
 
     cityForecast.forEach((weather) => {
         const time = formatTimestamp(new Date(weather.dt * 1000))
-        const weatherCode = weather.weather[0].main
+        const weatherCode = new Image()
+        weatherCode.src = getWeatherIcon(weather.weather[0].main)
         const temperature = `${unitsManager.getTemperature(weather.main.temp)}°`
 
         const forecastRow = document.createElement('tr')
