@@ -1,5 +1,7 @@
 import { formatTimestamp } from "./DataConvertor"
 import unitsManager from "./unitsManager"
+import currentPage from "./currentPage"
+import weatherAPI from "./weatherAPI"
 
 const makeDetailsSummaryCard = (cityWeather) => {
     const currentTime = new Date(Date.now())
@@ -46,16 +48,17 @@ const makeHourlyForecastCard = (cityForecast) => {
     })
 }
 
-const makeDetailsPage = (cityWeather, cityForecast) => {
+const makeDetailsPage = () => {
+    console.log('details page')
+    currentPage.setPage('details')
     const container = document.querySelector('main');
     const template = document.querySelector('#details-template')
     const detailsTemplate = document.importNode(template.content, true);
     container.append(detailsTemplate);
 
-    makeDetailsSummaryCard(cityWeather)
-    makeHourlyForecastCard(cityForecast);
-    console.log(cityWeather);
-    console.log(cityForecast);
+
+    makeDetailsSummaryCard(weatherAPI.getCityWeather())
+    makeHourlyForecastCard(weatherAPI.getCityForecast().list.slice(0,5));
 }
 
 export default makeDetailsPage

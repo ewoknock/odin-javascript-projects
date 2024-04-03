@@ -1,29 +1,41 @@
 const API_KEY = '8095bf42b6706e42f1b2fde540e8937d'
 
-const getCityList = async() => {
-    const cityInput = document.querySelector('#city')
-    const response = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${cityInput.value}&limit=5&appid=${API_KEY}`, { mode: 'cors'})
-    const cityList = await response.json();
-    cityInput.value = '';
-    return cityList;
-}
+const weatherAPI = (() => {
+    let cityList;
+    let cityWeatherData;
+    let cityForecast;
 
-const getCityWeather = async (latitude, longitude) => {
-    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`, { mode: 'cors'})
-    const cityWeather = await response.json();
+    const setCityList = async() => {
+        const cityInput = document.querySelector('#city')
+        const response = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${cityInput.value}&limit=5&appid=${API_KEY}`, { mode: 'cors'})
+        cityList = await response.json();
+        cityInput.value = '';
+    }
 
-    return cityWeather;
-}
+    const getCityList = () => cityList
+    
+    const setCityWeather = async(latitude, longitude) => {
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`, { mode: 'cors'})
+        cityWeatherData = await response.json();
+    }
 
-const getCityForecast = async (latitude, longitude) => {
-    const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`, { mode: 'cors'})
-    const cityForecast = await response.json();
+    const getCityWeather = () => cityWeatherData
+    
+    const setCityForecast = async (latitude, longitude) => {
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`, { mode: 'cors'})
+        cityForecast = await response.json();
+    }
 
-    return cityForecast
-}
+    const getCityForecast = () => cityForecast
+    
+    return{
+        setCityList,
+        setCityWeather,
+        setCityForecast,
+        getCityList,
+        getCityWeather,
+        getCityForecast
+    }
+})()
 
-export{
-    getCityList,
-    getCityWeather,
-    getCityForecast
-}
+export default weatherAPI

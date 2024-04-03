@@ -1,13 +1,16 @@
-import { clearContent } from "./display";
 import makeDetailsPage from "./cityDetailsPage";
-import { getCityWeather, getCityForecast } from "./weatherAPI";
+import weatherAPI from "./weatherAPI";
 import unitsManager from './unitsManager'
+import currentPage from "./currentPage";
+import { clearContent } from "./display";
 
 const makeCard = async(cardContainer, city) => {
     const card = document.createElement('div')
     card.classList.add('card')
     card.setAttribute('data-latitude', city.lat)
     card.setAttribute('data-longitude', city.lon)
+
+
 
     const cardHeader = document.createElement('h1')
     cardHeader.classList.add('card-header')
@@ -17,7 +20,8 @@ const makeCard = async(cardContainer, city) => {
     cardContainer.append(card)
 
     const {latitude, longitude} = card.dataset
-    const cityWeather = await getCityWeather(latitude, longitude)
+    await weatherAPI.setCityWeather(latitude, longitude)
+    let cityWeather = weatherAPI.getCityWeather()
 
     const cardWeather = document.createElement('div')
     cardWeather.classList.add('card-weather')
@@ -30,22 +34,27 @@ const makeCard = async(cardContainer, city) => {
     card.append(cardTemperature)
 
     card.addEventListener('click', async() => {
-
-        const cityForecast = await getCityForecast(latitude, longitude)
+        await weatherAPI.setCityForecast(latitude, longitude)
+        const cityForecast = weatherAPI.getCityForecast()
+        await weatherAPI.setCityWeather(latitude, longitude)
+        cityWeather = weatherAPI.getCityWeather()
         clearContent()
+        console.log(cityWeather)
         makeDetailsPage(cityWeather, cityForecast.list.slice(0,5))
     })
 
 
 }
 
-const makeCityCards = (cityList) => {
+const makeCityCards = async() => {
+    const cityList = weatherAPI.getCityList()
+    currentPage.setPage('citySearch')
+    const container = document.querySelector('main');
     const cardContainer = document.createElement('div')
     cardContainer.classList.add('card-container')
-
     cityList.forEach((city) => makeCard(cardContainer, city))
 
-    return cardContainer
+    container.append(cardContainer)
 }
 
 export default makeCityCards
