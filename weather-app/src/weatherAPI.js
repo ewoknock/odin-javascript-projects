@@ -7,7 +7,7 @@ const weatherAPI = (() => {
 
     const setCityList = async() => {
         const cityInput = document.querySelector('#city')
-        const response = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${cityInput.value}&limit=5&appid=${API_KEY}`, { mode: 'cors'})
+        const response = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${cityInput.value}&limit=5&appid=${API_KEY}`, { mode: 'cors'})
         cityList = await response.json();
         cityInput.value = '';
     }
