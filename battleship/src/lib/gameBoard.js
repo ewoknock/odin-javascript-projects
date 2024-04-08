@@ -54,7 +54,9 @@ const gameBoard = () => {
     const board = {
         ships: [],
         missedAttacks: [],
-        allShipsSunk(){},
+        allShipsSunk(){
+            return this.ships.every((ship) => ship.isSunk())
+        },
         placeShip(ship, coordinates, orientation){
             ship.coordinates = generateShipCoordinates(ship, coordinates, orientation)
             validateCoordinates(this.ships, ship.coordinates)

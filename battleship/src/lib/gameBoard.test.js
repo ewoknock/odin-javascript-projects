@@ -88,3 +88,20 @@ test('gameBoard can receive an attack and return the coordinates of the missed h
     board.receiveAttack([2,2])
     expect(board.missedAttacks).toEqual([[2,2]])
 })
+
+test('allShipsSunk returns false when not all ships are sunk', () => {
+    let board = gameBoard()
+    const ship1 = shipFactory("Cruiser", 3)
+    board.placeShip(ship1, [3,3], 'horizontal')
+    expect(board.allShipsSunk()).toBe(false)
+})
+
+test('allShipsSunk returns false when all ships are sunk', () => {
+    let board = gameBoard()
+    const ship1 = shipFactory("Cruiser", 3)
+    board.placeShip(ship1, [3,3], 'horizontal')
+    board.receiveAttack([3,3])
+    board.receiveAttack([4,3])
+    board.receiveAttack([5,3])
+    expect(board.allShipsSunk()).toBe(true)
+})
