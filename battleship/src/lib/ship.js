@@ -1,5 +1,6 @@
-const shipFactory = (length) => {
+const shipFactory = (name, length) => {
     const ship = {
+        name,
         length,
         hits: 0,
         isSunk() {
