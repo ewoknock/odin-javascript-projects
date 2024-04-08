@@ -1,5 +1,5 @@
-import gameBoard from './gameBoard.js'
-import shipFactory from './ship.js'
+import gameBoard from './gameBoard'
+import shipFactory from './ship'
 
 test('gameBoard returns an object', () => {
     let board = gameBoard()

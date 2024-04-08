@@ -1,4 +1,4 @@
-import shipFactory from './ship.js'
+import shipFactory from './ship'
 
 test('shipFactory returns an object', () => {
     expect(typeof shipFactory()).toBe('object')
