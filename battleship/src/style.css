@@ -3,8 +3,13 @@ main{
     justify-content: space-around;
 }
 
-h2{
+h2,
+.numbers{
     text-align: center;
+}
+
+.board-container{
+    padding: 1rem;
 }
 
 .board{
@@ -13,10 +18,30 @@ h2{
     grid-template-columns: repeat(10, 1fr);
 }
 
+.board-inner-wrapper{
+    display: flex;
+    gap: .6rem;
+}
+
+.column-description{
+    display: grid;
+    grid-template-columns: repeat(11, 1fr);
+}
+
+.row-description{
+    display: grid;
+    grid-template-rows: repeat(10, 1fr);
+}
+
 .grid-cell{
     height: 20px;
     width: 20px;
     border: 1px solid black;
+}
+
+.grid-cell:hover{
+    background-color: grey;
+    opacity: 0.2;
 }
 
 .ship{

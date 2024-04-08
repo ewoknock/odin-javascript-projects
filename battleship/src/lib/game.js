@@ -35,6 +35,18 @@ const gameFactory = () => {
                     }
                 }
             })
+        },
+        gameEnd(){
+            if(this.player1Board.allShipsSunk()){
+                return 'Computer wins'
+            }
+            if(this.player2Board.allShipsSunk()){
+                return 'Player wins'
+            }
+            return false
+        },
+        playGame(){
+            
         }
     }
     return game
