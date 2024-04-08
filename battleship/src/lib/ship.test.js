@@ -29,13 +29,13 @@ test('shipFactory object has a length property equal to the length of the ship',
 })
 
 test('shipFactory object has a hit count of 0 for a new ship', () => {
-    expect(shipFactory("Cruiser", 3).hits).toBe(0)
+    expect(shipFactory("Cruiser", 3).hits.length).toBe(0)
 })
 
 test('shipFactory object has a hit method that increments the hits property', () => {
     const ship = shipFactory("Cruiser", 3)
     ship.hit(1)
-    expect(ship.hits).toEqual(1)
+    expect(ship.hits.length).toEqual(1)
 })
 
 test('shipFactory object has a hit method that does not increment past the length of the ship', () => {
@@ -44,7 +44,7 @@ test('shipFactory object has a hit method that does not increment past the lengt
     ship.hit()
     ship.hit()
     ship.hit()
-    expect(ship.hits).toEqual(3)
+    expect(ship.hits.length).toEqual(3)
 })
 
 test('shipFactory object has an isSunk property that is false when the ship is not sunk', () => {

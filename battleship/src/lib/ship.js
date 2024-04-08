@@ -2,13 +2,14 @@ const shipFactory = (name, length) => {
     const ship = {
         name,
         length,
-        hits: 0,
+        hits: [],
         isSunk() {
-            return this.hits === this.length
+            return this.hits.length === this.length
         },
-        hit(){
-            if(this.hits < length)
-                this.hits++
+        hit(coordinate){
+            if(this.hits.length < this.length){
+                this.hits.push(coordinate)
+            }
         }
     }
 

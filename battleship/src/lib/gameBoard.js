@@ -1,3 +1,15 @@
+const checkHit = (coordinates, ships) => {
+    const [x, y] = coordinates
+    let hitShip = null
+    ships.forEach((ship) => {
+        ship.coordinates.forEach((coordinate) => {
+            if(coordinate[0] === x && coordinate[1] === y)
+            hitShip = ship
+        })
+    })
+    return hitShip
+}
+
 const generateShipCoordinates = (ship, coordinates, orientation) => {
     const [x, y] = coordinates
     const shipCoordinates = []
@@ -29,9 +41,10 @@ const coordinatesDoNotOverlap = (ships, shipCoordinates) => {
 const validateCoordinates = (ships, shipCoordinates) => {
     let validCoordinates = false;
     validCoordinates = coordinatesOnBoard(shipCoordinates)
-    if(validCoordinates){
-        coordinatesDoNotOverlap(ships, shipCoordinates)
+    if(!validCoordinates){
+        throw new Error('Ships cannot be placed off the board')
     }
+    coordinatesDoNotOverlap(ships, shipCoordinates)
 
     return validCoordinates
 }
@@ -44,12 +57,17 @@ const gameBoard = () => {
         allShipsSunk(){},
         placeShip(ship, coordinates, orientation){
             ship.coordinates = generateShipCoordinates(ship, coordinates, orientation)
-            if(!validateCoordinates(this.ships, ship.coordinates)){
-                throw new Error('Ships cannot be placed off the board')
-            }
+            validateCoordinates(this.ships, ship.coordinates)
             this.ships.push(ship)
         },
-        receiveAttack(){}
+        receiveAttack(coordinates){
+            const shipHit = checkHit(coordinates, this.ships)
+            if(shipHit){
+                shipHit.hit(coordinates)
+            }else{
+                this.missedAttacks.push(coordinates)
+            }
+        }
     }
     return board
 }

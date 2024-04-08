@@ -60,3 +60,31 @@ test('gameBoard errors when placing a ship on top of another ship', () => {
     board.placeShip(ship1, [3,3], 'horizontal')
     expect(() => board.placeShip(ship2, [4,3], 'horizontal')).toThrow()
 })
+
+test('gameBoard can place multiple ships', () => {
+    let board = gameBoard()
+
+    const ship1 = shipFactory("Cruiser", 3)
+    const ship2 = shipFactory("Submarine", 3)
+    board.placeShip(ship1, [3,3], 'horizontal')
+    board.placeShip(ship2, [3,4], 'horizontal')
+    expect(board.ships.length).toBe(2) 
+})
+
+test('gameBoard can receive an attack and return the coordinates of the hit', () => {
+    let board = gameBoard()
+
+    const ship1 = shipFactory("Cruiser", 3)
+    board.placeShip(ship1, [3,3], 'horizontal')
+    board.receiveAttack([3,3])
+    expect(board.ships[0].hits).toEqual([[3,3]])
+})
+
+test('gameBoard can receive an attack and return the coordinates of the missed hit', () => {
+    let board = gameBoard()
+
+    const ship1 = shipFactory("Cruiser", 3)
+    board.placeShip(ship1, [3,3], 'horizontal')
+    board.receiveAttack([2,2])
+    expect(board.missedAttacks).toEqual([[2,2]])
+})
