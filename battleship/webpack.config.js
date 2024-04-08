@@ -10,7 +10,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html',
-      title: 'Weather App',
+      title: 'Battleship',
     }),
   ],
    output: {
