@@ -25,28 +25,35 @@ const drawGrid = (type = 'player') => {
     }
 }
 
+function makeAttack(event){
+    console.log(event)
+    const cell = event.target
+    const gameInstance = event.target.gameInstance
+    const x = parseInt(cell.getAttribute('data-x'))
+    const y = parseInt(cell.getAttribute('data-y'))
+
+    try{
+        const attack = gameInstance.attack(x, y)
+        console.log(attack)
+        if(attack === 'hit'){
+            cell.classList.add('hit')
+            cell.removeEventListener('click', makeAttack)
+        }else if(attack === 'miss'){
+            cell.classList.add('miss')
+            cell.removeEventListener('click', makeAttack)
+        }
+    }catch(e){
+
+    }
+}
+
 const updateEventListeners = (type = 'player', gameInstance) => {
     const board = type === 'player' ? document.getElementById('player1') : document.getElementById('player2')
     const cells = board.querySelectorAll('.grid-cell')
     cells.forEach((cell) => {
         if(!cell.classList.contains('hit') && !cell.classList.contains('miss')){
-            cell.addEventListener('click', () => {
-                const x = parseInt(cell.getAttribute('data-x'))
-                const y = parseInt(cell.getAttribute('data-y'))
-
-                try{
-                    const attack = gameInstance.attack(x, y)
-                    console.log(attack)
-                    if(attack === 'hit'){
-                        cell.classList.add('hit')
-                    }else if(attack === 'miss'){
-                        cell.classList.add('miss')
-                    }
-
-                }catch(e){
-
-                }
-            })
+            cell.addEventListener('click', makeAttack)
+            cell.gameInstance = gameInstance
         }
 
     })
