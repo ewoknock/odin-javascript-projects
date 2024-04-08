@@ -36,6 +36,9 @@ const gameFactory = () => {
                 }
             })
         },
+        attack(x, y){
+            return this.player2Board.receiveAttack([x,y])
+        },
         gameEnd(){
             if(this.player1Board.allShipsSunk()){
                 return 'Computer wins'
@@ -46,7 +49,7 @@ const gameFactory = () => {
             return false
         },
         playGame(){
-            
+
         }
     }
     return game

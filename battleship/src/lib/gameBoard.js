@@ -66,8 +66,10 @@ const gameBoard = () => {
             const shipHit = checkHit(coordinates, this.ships)
             if(shipHit){
                 shipHit.hit(coordinates)
+                return 'hit'
             }else{
                 this.missedAttacks.push(coordinates)
+                return 'miss'
             }
         }
     }

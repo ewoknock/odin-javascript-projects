@@ -1,6 +1,7 @@
 import { 
     drawGrid, 
-    updateGrid 
+    updateGrid,
+    updateEventListeners
 } from './lib/display'
 import gameFactory from './lib/game'
 import './style.css'
@@ -14,3 +15,4 @@ game.randomShipPlacement(game.player2Board)
 console.log(game.player1Board)
 
 updateGrid('player', game.player1Board)
+updateEventListeners('computer', game)

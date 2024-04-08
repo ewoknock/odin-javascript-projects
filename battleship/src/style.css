@@ -16,6 +16,7 @@ h2,
     display: grid;
     grid-template-rows: repeat(10, 1fr);
     grid-template-columns: repeat(10, 1fr);
+    gap: 2px;
 }
 
 .board-inner-wrapper{
@@ -26,11 +27,13 @@ h2,
 .column-description{
     display: grid;
     grid-template-columns: repeat(11, 1fr);
+    gap: 2px;
 }
 
 .row-description{
     display: grid;
     grid-template-rows: repeat(10, 1fr);
+    gap: 2px;
 }
 
 .grid-cell{
@@ -46,4 +49,12 @@ h2,
 
 .ship{
     background-color: blue;
+}
+
+.hit{
+    background-color: red;
+}
+
+.miss{
+    background-color: grey;
 }
