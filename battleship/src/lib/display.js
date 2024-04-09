@@ -1,3 +1,19 @@
+const createAlert = (message) => {
+    const alert = document.getElementById('alert')
+    alert.innerHTML = `
+        <div class="alert-message">
+            <button class="delete">X</button>
+            <p class="alert-message">${message}</p>
+        </div
+        `
+    const button = alert.querySelector('button')
+    button.addEventListener('click', () => {
+        button.removeEventListener('click', () => {})
+        alert.innerHTML = ''
+    })
+}
+
+
 const updateGrid = (type = 'player', gameBoard) => {
     const board = type === 'player' ? document.getElementById('player1') : document.getElementById('player2')
     const { ships, missedAttacks } = gameBoard;
@@ -52,11 +68,18 @@ function makeAttack(event){
         console.log(attack)
         if(attack === 'hit'){
             cell.classList.add('hit')
+            createAlert('You hit a ship!')
             cell.removeEventListener('click', makeAttack)
         }else if(attack === 'miss'){
             cell.removeEventListener('click', makeAttack)
             gameInstance.changePlayer()
-            gameInstance.computerAttack()
+            const computerAttack = gameInstance.computerAttack()
+            if(computerAttack === 'miss'){
+                createAlert('You both missed!')
+            }
+            else if(computerAttack === 'hit'){
+                createAlert('You missed but the computer hit!')
+            }
             gameInstance.changePlayer()
             updateGrid('player', gameInstance.player1.getBoard())
             updateGrid('computer', gameInstance.player2.getBoard())
@@ -82,5 +105,6 @@ const updateEventListeners = (type = 'player', gameInstance) => {
 export {
     drawGrid,
     updateGrid,
-    updateEventListeners
+    updateEventListeners,
+    createAlert
 }

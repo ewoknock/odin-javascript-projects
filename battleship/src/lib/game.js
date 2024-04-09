@@ -58,6 +58,7 @@ const gameFactory = () => {
                 console.log(attack)
                 if(attack === 'hit'){
                     this.computerAttack(hits+1)
+                    return 'hit'
                 }
             }
             if(hits === 0){
