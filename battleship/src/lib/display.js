@@ -42,18 +42,23 @@ const updateGrid = (type = 'player', gameBoard) => {
     const board = type === 'player' ? document.getElementById('player1') : document.getElementById('player2')
     const { ships, missedAttacks } = gameBoard;
 
-    if(type === 'player'){
-        ships.forEach((ship) => {
-            const shipImages = getShipImages(ship.name)
-            for(let i = 0; i < ship.length; i++){
-                const cell = board.querySelector(`[data-x="${ship.coordinates[i][0]}"][data-y="${ship.coordinates[i][1]}"]`)
-                if(ship.orientation === 'vertical'){
-                    cell.style.transform = 'rotate(90deg)'
-                }
-                cell.style.backgroundImage = `url(${shipImages[i]})`
+    ships.forEach((ship) => {
+        const shipImages = getShipImages(ship.name)
+        for(let i = 0; i < ship.length; i++){
+            const cell = board.querySelector(`[data-x="${ship.coordinates[i][0]}"][data-y="${ship.coordinates[i][1]}"]`)
+            if(ship.orientation === 'vertical'){
+                cell.style.transform = 'rotate(90deg)'
             }
-        })
-    }
+            cell.style.backgroundImage = `url(${shipImages[i]})`
+            console.log(board)
+            console.log(type !== 'player')
+            if(type !== 'player'){
+                console.log(type !== 'player')
+                cell.classList.add("hidden")
+            }
+        }
+    })
+ 
 
     missedAttacks.forEach((coordinate) => {
         const cell = board.querySelector(`[data-x="${coordinate[0]}"][data-y="${coordinate[1]}"]`)
@@ -64,7 +69,9 @@ const updateGrid = (type = 'player', gameBoard) => {
         ship.hits.forEach((coordinate) => {
             const cell = board.querySelector(`[data-x="${coordinate[0]}"][data-y="${coordinate[1]}"]`)
             cell.classList.add("hit")
-
+            if(ship.isSunk()){
+                cell.classList.remove("hidden")
+            }
         })
     })
 }

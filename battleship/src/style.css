@@ -59,6 +59,10 @@ h2,
     opacity: 0.2;
 }
 
+.hidden{
+    background-size: 0 0;
+}
+
 .ship{
     background-color: blue;
 }
