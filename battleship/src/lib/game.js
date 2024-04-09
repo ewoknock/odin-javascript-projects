@@ -29,9 +29,9 @@ const gameFactory = () => {
                         Math.floor(Math.random() * 10),
                         Math.floor(Math.random() * 10)
                     ]
-                    orientation = Math.random() < 0.5 ? 'horizontal' : 'vertical'
+                    ship.orientation = Math.random() < 0.5 ? 'horizontal' : 'vertical'
                     try{
-                        board.placeShip(ship, coordinates, orientation)
+                        board.placeShip(ship, coordinates)
                         validPlacement = true
                     } catch(error){
                         validPlacement = false

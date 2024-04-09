@@ -1,3 +1,8 @@
+import { 
+    getShipImages,
+    getExplosionImage 
+} from "./ships"
+
 const createAlert = (message) => {
     let alert = document.getElementById('alert')
     alert.innerHTML = `
@@ -39,9 +44,13 @@ const updateGrid = (type = 'player', gameBoard) => {
 
     if(type === 'player'){
         ships.forEach((ship) => {
+            const shipImages = getShipImages(ship.name)
             for(let i = 0; i < ship.length; i++){
                 const cell = board.querySelector(`[data-x="${ship.coordinates[i][0]}"][data-y="${ship.coordinates[i][1]}"]`)
-                cell.classList.add('ship')
+                if(ship.orientation === 'vertical'){
+                    cell.style.transform = 'rotate(90deg)'
+                }
+                cell.style.backgroundImage = `url(${shipImages[i]})`
             }
         })
     }

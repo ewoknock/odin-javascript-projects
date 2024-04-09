@@ -3,6 +3,7 @@ const shipFactory = (name, length) => {
         name,
         length,
         hits: [],
+        orientation: 'horizontal',
         isSunk() {
             return this.hits.length === this.length
         },

@@ -10,11 +10,11 @@ const checkHit = (coordinates, ships) => {
     return hitShip
 }
 
-const generateShipCoordinates = (ship, coordinates, orientation) => {
+const generateShipCoordinates = (ship, coordinates) => {
     const [x, y] = coordinates
     const shipCoordinates = []
     for(let i = 0; i < ship.length; i++){
-        orientation === 'horizontal' ? shipCoordinates.push([x + i, y]) : shipCoordinates.push([x, y + i])
+        ship.orientation === 'horizontal' ? shipCoordinates.push([x + i, y]) : shipCoordinates.push([x, y + i])
     }
     return shipCoordinates
 }
@@ -57,8 +57,8 @@ const gameBoard = () => {
         allShipsSunk(){
             return this.ships.every((ship) => ship.isSunk())
         },
-        placeShip(ship, coordinates, orientation){
-            ship.coordinates = generateShipCoordinates(ship, coordinates, orientation)
+        placeShip(ship, coordinates){
+            ship.coordinates = generateShipCoordinates(ship, coordinates)
             validateCoordinates(this.ships, ship.coordinates)
             this.ships.push(ship)
         },
