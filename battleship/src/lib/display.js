@@ -50,10 +50,7 @@ const updateGrid = (type = 'player', gameBoard) => {
                 cell.style.transform = 'rotate(90deg)'
             }
             cell.style.backgroundImage = `url(${shipImages[i]})`
-            console.log(board)
-            console.log(type !== 'player')
             if(type !== 'player'){
-                console.log(type !== 'player')
                 cell.classList.add("hidden")
             }
         }
@@ -114,11 +111,10 @@ function makeAttack(event){
                 createAlert('You missed but the computer hit!')
             }
             gameInstance.changePlayer()
-            updateGrid('player', gameInstance.player1.getBoard())
-            updateGrid('computer', gameInstance.player2.getBoard())
         }
         const gameOver = gameInstance.gameEnd()
-
+        updateGrid('player', gameInstance.player1.getBoard())
+        updateGrid('computer', gameInstance.player2.getBoard())
         if(gameOver){
             endGame(gameOver)
             gameInstance.setupGame()

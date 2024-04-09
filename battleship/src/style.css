@@ -10,7 +10,8 @@ main{
 
 .boards{
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    gap: 4rem;
     
 }
 
@@ -48,8 +49,8 @@ h2,
 }
 
 .grid-cell{
-    height: 20px;
-    width: 20px;
+    height: 2rem;
+    width: 2rem;
     border: 1px solid black;
     background-size: contain;
 }

@@ -51,7 +51,6 @@ const gameFactory = () => {
                 this.computerAttack()
             } else{
                 const attack = this.attack(coordinates)
-                console.log(attack)
                 if(attack === 'hit'){
                     this.computerAttack(hits+1)
                     return 'hit'
@@ -81,7 +80,7 @@ const gameFactory = () => {
         },
         playGame(){
             while(!this.gameEnd()){
-                
+
             }
         }
     }

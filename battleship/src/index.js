@@ -10,6 +10,7 @@ drawGrid()
 drawGrid('computer')
 
 const game = gameFactory();
-game.setupGame();
+game.setupGame()
 updateGrid('player', game.player1.getBoard())
+updateGrid('computer', game.player2.getBoard())
 updateEventListeners('computer', game)
