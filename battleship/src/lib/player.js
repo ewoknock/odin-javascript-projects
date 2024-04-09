@@ -6,7 +6,7 @@ const player = () => {
     const getBoard = () => board
     
     const attack = (enemyBoard, coordinates) => {
-        enemyBoard.receiveAttack(coordinates)
+        return enemyBoard.receiveAttack(coordinates)
     }
     return { getBoard, attack }
 }

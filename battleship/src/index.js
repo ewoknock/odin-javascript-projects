@@ -10,9 +10,7 @@ drawGrid()
 drawGrid('computer')
 
 const game = gameFactory();
-game.randomShipPlacement(game.player1Board)
-game.randomShipPlacement(game.player2Board)
-console.log(game.player1Board)
-
-updateGrid('player', game.player1Board)
+game.setupGame();
+console.log(game.currentPlayer)
+updateGrid('player', game.player1.getBoard())
 updateEventListeners('computer', game)
