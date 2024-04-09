@@ -1,10 +1,10 @@
 const createAlert = (message) => {
-    const alert = document.getElementById('alert')
+    let alert = document.getElementById('alert')
     alert.innerHTML = `
         <div class="alert-message">
             <button class="delete">X</button>
-            <p class="alert-message">${message}</p>
-        </div
+            <p class="message">${message}</p>
+        </div>
         `
     const button = alert.querySelector('button')
     button.addEventListener('click', () => {
@@ -12,7 +12,26 @@ const createAlert = (message) => {
         alert.innerHTML = ''
     })
 }
+ 
+const createResetButton = () => {
+    const resetButton = document.createElement('button')
+    resetButton.classList.add('reset')
+    resetButton.textContent = "Reset Game"
+    resetButton.addEventListener('click', () => {
+        window.location.reload()
+    })
+    alert = document.getElementById('alert')
+    alert.appendChild(resetButton)
+}
 
+const endGame = (winner) => {
+    createAlert(winner)
+    const cells = document.querySelectorAll('.grid-cell')
+    cells.forEach((cell) => {
+        cell.removeEventListener('click', makeAttack)
+    })
+    createResetButton()
+}
 
 const updateGrid = (type = 'player', gameBoard) => {
     const board = type === 'player' ? document.getElementById('player1') : document.getElementById('player2')
@@ -39,8 +58,6 @@ const updateGrid = (type = 'player', gameBoard) => {
 
         })
     })
-
-
 }
 
 
@@ -61,11 +78,11 @@ const drawGrid = (type = 'player') => {
 function makeAttack(event){
     const cell = event.target
     const gameInstance = event.target.gameInstance
+
     const x = parseInt(cell.getAttribute('data-x'))
     const y = parseInt(cell.getAttribute('data-y'))
     try{
         const attack = gameInstance.attack([x,y])
-        console.log(attack)
         if(attack === 'hit'){
             cell.classList.add('hit')
             createAlert('You hit a ship!')
@@ -84,7 +101,12 @@ function makeAttack(event){
             updateGrid('player', gameInstance.player1.getBoard())
             updateGrid('computer', gameInstance.player2.getBoard())
         }
+        const gameOver = gameInstance.gameEnd()
 
+        if(gameOver){
+            endGame(gameOver)
+            gameInstance.setupGame()
+        }
     }catch(e){
 
     }

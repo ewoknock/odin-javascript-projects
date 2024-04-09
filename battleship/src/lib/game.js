@@ -47,10 +47,6 @@ const gameFactory = () => {
                 Math.floor(Math.random() * 10),
                 Math.floor(Math.random() * 10)
             ]
-            if(hits > 0){
-                console.log(hits)
-                console.log(coordinates)
-            }
             if(this.enemyBoard.missedAttacks.some((missedAttack) => missedAttack[0] === coordinates[0] && missedAttack[1] === coordinates[1])){
                 this.computerAttack()
             } else{
