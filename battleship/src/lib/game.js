@@ -1,6 +1,7 @@
 import gameBoard from "./gameBoard"
 import shipFactory from "./ship"
 import player from "./player"
+import { createAlert } from "./display"
 
 const gameFactory = () => {
     const game = {
@@ -68,6 +69,7 @@ const gameFactory = () => {
             this.randomShipPlacement(this.player2.getBoard())
             this.currentPlayer = this.player1
             this.enemyBoard = this.player2.getBoard()
+            createAlert("Welcome to Battleship!")
         },
         gameEnd(){
             if(this.player1.getBoard().allShipsSunk()){

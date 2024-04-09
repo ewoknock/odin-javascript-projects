@@ -1,5 +1,6 @@
-body{
-    background-color: lightgrey;
+:root{
+    --box-shadow: 0 .5em 1em .5em rgba(10,10,10,.1);
+
 }
 
 main{
@@ -12,7 +13,6 @@ main{
     display: flex;
     justify-content: center;
     gap: 4rem;
-    
 }
 
 h2,
@@ -29,6 +29,7 @@ h2,
     grid-template-rows: repeat(10, 1fr);
     grid-template-columns: repeat(10, 1fr);
     gap: 2px;
+    box-shadow: var(--box-shadow)
 }
 
 .board-inner-wrapper{
@@ -79,8 +80,10 @@ h2,
 .alert-container{
     position: relative;
     margin: 2rem auto;
-    width: 60%;
+    height: 4rem;
+    width: 30rem;
     text-align: center;
+    box-shadow: var(--box-shadow)
 }
 
 

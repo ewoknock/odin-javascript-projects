@@ -7,16 +7,10 @@ const createAlert = (message) => {
     let alert = document.getElementById('alert')
     alert.innerHTML = `
         <div class="alert-message">
-            <button class="delete">X</button>
             <p class="message">${message}</p>
         </div>
         `
-    const button = alert.querySelector('button')
-    button.addEventListener('click', () => {
-        button.removeEventListener('click', () => {})
-        alert.innerHTML = ''
-    })
-}
+    }
  
 const createResetButton = () => {
     const resetButton = document.createElement('button')
