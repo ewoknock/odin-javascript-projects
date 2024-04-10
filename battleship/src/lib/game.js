@@ -64,7 +64,7 @@ const gameFactory = () => {
         setupGame(){
             this.player1 = player()
             this.player2 = player()
-            placeShips(this, 'Carrier')
+            placeShips(this, 0)
             this.randomShipPlacement(this.player2.getBoard())
             this.currentPlayer = this.player1
             this.enemyBoard = this.player2.getBoard()

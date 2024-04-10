@@ -13,4 +13,3 @@ const game = gameFactory();
 game.setupGame()
 updateGrid('player', game.player1.getBoard())
 updateGrid('computer', game.player2.getBoard())
-updateEventListeners('computer', game)

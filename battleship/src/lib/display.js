@@ -115,11 +115,12 @@ function makeAttack(event){
             gameInstance.changePlayer()
         }
         const gameOver = gameInstance.gameEnd()
+        console.log(gameOver)
         updateGrid('player', gameInstance.player1.getBoard())
         updateGrid('computer', gameInstance.player2.getBoard())
         if(gameOver){
+            console.log("In Here")
             endGame(gameOver)
-            gameInstance.setupGame()
         }
     }catch(e){
 
@@ -134,7 +135,6 @@ const updateEventListeners = (type = 'player', gameInstance) => {
             cell.addEventListener('click', makeAttack)
             cell.gameInstance = gameInstance
         }
-        console.log("here")
         cell.removeEventListener('mouseover', setShipImage)
         cell.removeEventListener('mouseout', removeShipImage)
 
@@ -151,21 +151,6 @@ const stopPlacing = () => {
         cell.replaceWith(cell.cloneNode(true))
     })
 }
-/*
-const setShipImage = (cell, shipImages, orientation, shipLength) => {
-    const {x, y} = getCoordinatesFromCell(cell)
-    for(let i = 0; i < shipLength; i++){
-        const cellToChange = orientation === 'horizontal' 
-            ? document.querySelector(`[data-x="${x + i}"][data-y="${y}"]`)
-            : document.querySelector(`[data-x="${x}"][data-y="${y + i}"]`)
-        if(cellToChange){
-            if(!cellToChange.classList.contains('ship')){
-                cellToChange.style.transform = orientation === 'horizontal' ? 'rotate(0deg)' : 'rotate(90deg)'
-                cellToChange.style.backgroundImage = `url(${shipImages[i]})`
-            }
-        }
-    }  
-}*/
 
 function setShipImage(event){
     const cell = event.target
@@ -198,45 +183,45 @@ function removeShipImage(event){
     }  
 }
 
-const placeShips = (gameInstance, shipName, orientation = 'horizontal') => {
+const placeShips = (gameInstance, shipIndex, orientation = 'horizontal') => {
     const cells = document.getElementById('player1').querySelectorAll('.grid-cell')
     const shipTypes = ['Carrier', 'Battleship', 'Cruiser', 'Submarine', 'Destroyer']
-    const nextShip = shipTypes.indexOf(shipName) + 1;
-    const shipImages = getShipImages(shipName)
-    const shipLength = shipImages.length
-    console.log(nextShip)
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'r'){
-            stopPlacing()
-            placeShips(gameInstance, shipName, orientation === 'horizontal' ? 'vertical' : 'horizontal')
-        }
-    })
-    cells.forEach((cell) => {
-        cell.shipImages = shipImages
-        cell.orientation = orientation
-        cell.shipLength = shipLength
-        cell.addEventListener('mouseover', setShipImage)
-        cell.addEventListener('mouseout', removeShipImage)
-        cell.addEventListener('click', () => {
-            const {x,y} = getCoordinatesFromCell(cell)
-            const ship = shipFactory(shipName, shipLength)
-            ship.orientation = orientation
-            try{
-                gameInstance.player1.getBoard().placeShip(ship, [x,y])
-                updateGrid('player', gameInstance.player1.getBoard())
-                if(nextShip <= shipTypes.length) {
-                    stopPlacing()
-                    placeShips(gameInstance, shipTypes[nextShip], orientation)
-                }else{
-                    stopPlace()
-                    updateEventListeners('player', gameInstance)
-                    updateGrid('player', gameInstance)
-                }
-            }catch(e){
+    if(shipIndex < shipTypes.length) {
 
+        const shipName = shipTypes[shipIndex]
+        const shipImages = getShipImages(shipName)
+        const shipLength = shipImages.length
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'r'){
+                stopPlacing()
+                placeShips(gameInstance, shipIndex+1, orientation === 'horizontal' ? 'vertical' : 'horizontal')
             }
         })
-    })
+        cells.forEach((cell) => {
+            cell.shipImages = shipImages
+            cell.orientation = orientation
+            cell.shipLength = shipLength
+            cell.addEventListener('mouseover', setShipImage)
+            cell.addEventListener('mouseout', removeShipImage)
+            cell.addEventListener('click', () => {
+                const {x,y} = getCoordinatesFromCell(cell)
+                const ship = shipFactory(shipName, shipLength)
+                ship.orientation = orientation
+                try{
+                    gameInstance.player1.getBoard().placeShip(ship, [x,y])
+                    updateGrid('player', gameInstance.player1.getBoard())
+                    stopPlacing()
+                    placeShips(gameInstance, shipIndex+1, orientation)
+                }catch(e){
+                    createAlert(e.message)       
+                }
+            })
+        })
+    }else{
+        stopPlacing()
+        updateEventListeners('player', gameInstance)
+        updateEventListeners('computer', gameInstance)
+    }
 }
 
 export {
