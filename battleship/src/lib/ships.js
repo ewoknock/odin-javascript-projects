@@ -25,8 +25,6 @@ import destroyerImage from './images/battleships-24.png'
 import destroyer1 from './images/battleships-18.png'
 import destroyer2 from './images/battleships-19.png'
 
-import explosion from './images/explosion.png'
-
 const carrier = {
     name: 'Carrier',
     length: 5,
@@ -75,13 +73,4 @@ const getShipImages = (shipName) => {
     return ship.images
 }
 
-const getExplosionImage = () => {
-    return explosion
-}
-
-export {
-    ships,
-    getShipImages,
-    getExplosionImage
-}
-
+export default getShipImages

@@ -1,7 +1,4 @@
-import { 
-    getShipImages,
-    getExplosionImage 
-} from "./ships"
+import getShipImages from './ships'
 import shipFactory from "./ship"
 
 const getCoordinatesFromCell = (cell) => {
@@ -59,7 +56,6 @@ const updateGrid = (type = 'player', gameBoard) => {
         }
     })
  
-
     missedAttacks.forEach((coordinate) => {
         const cell = board.querySelector(`[data-x="${coordinate[0]}"][data-y="${coordinate[1]}"]`)
         cell.classList.add('miss')
@@ -131,13 +127,15 @@ const updateEventListeners = (type = 'player', gameInstance) => {
     const board = type === 'player' ? document.getElementById('player1') : document.getElementById('player2')
     const cells = board.querySelectorAll('.grid-cell')
     cells.forEach((cell) => {
-        if(!cell.classList.contains('hit') && !cell.classList.contains('miss')){
-            cell.addEventListener('click', makeAttack)
-            cell.gameInstance = gameInstance
+        if(type === 'player'){
+            cell.removeEventListener('mouseover', setShipImage)
+            cell.removeEventListener('mouseout', removeShipImage)
+        }else{
+            if(!cell.classList.contains('hit') && !cell.classList.contains('miss')){
+                cell.addEventListener('click', makeAttack)
+                cell.gameInstance = gameInstance
+            }
         }
-        cell.removeEventListener('mouseover', setShipImage)
-        cell.removeEventListener('mouseout', removeShipImage)
-
     })
 }
 
@@ -169,6 +167,7 @@ function setShipImage(event){
         }
     }  
 }
+
 function removeShipImage(event){
     const cell = event.target
     const {orientation, shipLength} = cell
@@ -194,7 +193,7 @@ const placeShips = (gameInstance, shipIndex, orientation = 'horizontal') => {
         document.addEventListener('keydown', (e) => {
             if (e.key === 'r'){
                 stopPlacing()
-                placeShips(gameInstance, shipIndex+1, orientation === 'horizontal' ? 'vertical' : 'horizontal')
+                placeShips(gameInstance, shipIndex, orientation === 'horizontal' ? 'vertical' : 'horizontal')
             }
         })
         cells.forEach((cell) => {
