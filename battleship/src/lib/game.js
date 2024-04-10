@@ -68,7 +68,7 @@ const gameFactory = () => {
             this.randomShipPlacement(this.player2.getBoard())
             this.currentPlayer = this.player1
             this.enemyBoard = this.player2.getBoard()
-            createAlert("Welcome to Battleship!")
+            createAlert("Welcome to Battleship!<br>Press 'r' to rotate ships")
         },
         gameEnd(){
             if(this.player1.getBoard().allShipsSunk()){

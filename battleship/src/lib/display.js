@@ -218,6 +218,7 @@ const placeShips = (gameInstance, shipIndex, orientation = 'horizontal') => {
         })
     }else{
         stopPlacing()
+        createAlert("Done placing ships! It's time to attack!")
         updateEventListeners('player', gameInstance)
         updateEventListeners('computer', gameInstance)
     }
