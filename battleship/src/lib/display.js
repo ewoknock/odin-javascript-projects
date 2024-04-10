@@ -111,11 +111,9 @@ function makeAttack(event){
             gameInstance.changePlayer()
         }
         const gameOver = gameInstance.gameEnd()
-        console.log(gameOver)
         updateGrid('player', gameInstance.player1.getBoard())
         updateGrid('computer', gameInstance.player2.getBoard())
         if(gameOver){
-            console.log("In Here")
             endGame(gameOver)
         }
     }catch(e){
