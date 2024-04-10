@@ -2,6 +2,14 @@ import {
     getShipImages,
     getExplosionImage 
 } from "./ships"
+import shipFactory from "./ship"
+
+const getCoordinatesFromCell = (cell) => {
+    const x = parseInt(cell.getAttribute('data-x'))
+    const y = parseInt(cell.getAttribute('data-y'))
+
+    return {x, y}
+}
 
 const createAlert = (message) => {
     let alert = document.getElementById('alert')
@@ -40,6 +48,7 @@ const updateGrid = (type = 'player', gameBoard) => {
         const shipImages = getShipImages(ship.name)
         for(let i = 0; i < ship.length; i++){
             const cell = board.querySelector(`[data-x="${ship.coordinates[i][0]}"][data-y="${ship.coordinates[i][1]}"]`)
+            cell.classList.add('ship')
             if(ship.orientation === 'vertical'){
                 cell.style.transform = 'rotate(90deg)'
             }
@@ -86,8 +95,7 @@ function makeAttack(event){
     const cell = event.target
     const gameInstance = event.target.gameInstance
 
-    const x = parseInt(cell.getAttribute('data-x'))
-    const y = parseInt(cell.getAttribute('data-y'))
+    const {x, y} = getCoordinatesFromCell(cell)
     try{
         const attack = gameInstance.attack([x,y])
         if(attack === 'hit'){
@@ -126,13 +134,115 @@ const updateEventListeners = (type = 'player', gameInstance) => {
             cell.addEventListener('click', makeAttack)
             cell.gameInstance = gameInstance
         }
+        console.log("here")
+        cell.removeEventListener('mouseover', setShipImage)
+        cell.removeEventListener('mouseout', removeShipImage)
 
     })
 }
 
+const stopPlacing = () => {
+    const cells = document.getElementById('player1').querySelectorAll('.grid-cell')
+
+    cells.forEach((cell) => {
+        if(!cell.classList.contains('ship'))
+        cell.style.backgroundImage = ''
+
+        cell.replaceWith(cell.cloneNode(true))
+    })
+}
+/*
+const setShipImage = (cell, shipImages, orientation, shipLength) => {
+    const {x, y} = getCoordinatesFromCell(cell)
+    for(let i = 0; i < shipLength; i++){
+        const cellToChange = orientation === 'horizontal' 
+            ? document.querySelector(`[data-x="${x + i}"][data-y="${y}"]`)
+            : document.querySelector(`[data-x="${x}"][data-y="${y + i}"]`)
+        if(cellToChange){
+            if(!cellToChange.classList.contains('ship')){
+                cellToChange.style.transform = orientation === 'horizontal' ? 'rotate(0deg)' : 'rotate(90deg)'
+                cellToChange.style.backgroundImage = `url(${shipImages[i]})`
+            }
+        }
+    }  
+}*/
+
+function setShipImage(event){
+    const cell = event.target
+    const { orientation, shipImages, shipLength } = cell
+
+    const {x, y} = getCoordinatesFromCell(cell)
+    for(let i = 0; i < shipLength; i++){
+        const cellToChange = orientation === 'horizontal' 
+            ? document.querySelector(`[data-x="${x + i}"][data-y="${y}"]`)
+            : document.querySelector(`[data-x="${x}"][data-y="${y + i}"]`)
+        if(cellToChange){
+            if(!cellToChange.classList.contains('ship')){
+                cellToChange.style.transform = orientation === 'horizontal' ? 'rotate(0deg)' : 'rotate(90deg)'
+                cellToChange.style.backgroundImage = `url(${shipImages[i]})`
+            }
+        }
+    }  
+}
+function removeShipImage(event){
+    const cell = event.target
+    const {orientation, shipLength} = cell
+    const {x, y} = getCoordinatesFromCell(cell)
+    for(let i = 0; i < shipLength; i++){
+        const cellToChange = orientation === 'horizontal' 
+            ? document.querySelector(`[data-x="${x + i}"][data-y="${y}"]`)
+            : document.querySelector(`[data-x="${x}"][data-y="${y + i}"]`)
+        if(cellToChange &&!cellToChange.classList.contains('ship')){
+            cellToChange.style.backgroundImage = ``
+        }
+    }  
+}
+
+const placeShips = (gameInstance, shipName, orientation = 'horizontal') => {
+    const cells = document.getElementById('player1').querySelectorAll('.grid-cell')
+    const shipTypes = ['Carrier', 'Battleship', 'Cruiser', 'Submarine', 'Destroyer']
+    const nextShip = shipTypes.indexOf(shipName) + 1;
+    const shipImages = getShipImages(shipName)
+    const shipLength = shipImages.length
+    console.log(nextShip)
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'r'){
+            stopPlacing()
+            placeShips(gameInstance, shipName, orientation === 'horizontal' ? 'vertical' : 'horizontal')
+        }
+    })
+    cells.forEach((cell) => {
+        cell.shipImages = shipImages
+        cell.orientation = orientation
+        cell.shipLength = shipLength
+        cell.addEventListener('mouseover', setShipImage)
+        cell.addEventListener('mouseout', removeShipImage)
+        cell.addEventListener('click', () => {
+            const {x,y} = getCoordinatesFromCell(cell)
+            const ship = shipFactory(shipName, shipLength)
+            ship.orientation = orientation
+            try{
+                gameInstance.player1.getBoard().placeShip(ship, [x,y])
+                updateGrid('player', gameInstance.player1.getBoard())
+                if(nextShip <= shipTypes.length) {
+                    stopPlacing()
+                    placeShips(gameInstance, shipTypes[nextShip], orientation)
+                }else{
+                    stopPlace()
+                    updateEventListeners('player', gameInstance)
+                    updateGrid('player', gameInstance)
+                }
+            }catch(e){
+
+            }
+        })
+    })
+}
+
 export {
+    createAlert,
     drawGrid,
     updateGrid,
     updateEventListeners,
-    createAlert
+    placeShips
 }

@@ -1,7 +1,6 @@
-import gameBoard from "./gameBoard"
 import shipFactory from "./ship"
 import player from "./player"
-import { createAlert } from "./display"
+import { createAlert, placeShips } from "./display"
 
 const gameFactory = () => {
     const game = {
@@ -65,7 +64,7 @@ const gameFactory = () => {
         setupGame(){
             this.player1 = player()
             this.player2 = player()
-            this.randomShipPlacement(this.player1.getBoard())
+            placeShips(this, 'Carrier')
             this.randomShipPlacement(this.player2.getBoard())
             this.currentPlayer = this.player1
             this.enemyBoard = this.player2.getBoard()

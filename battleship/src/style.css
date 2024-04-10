@@ -69,17 +69,8 @@ h2,
     background-size: contain;
 }
 
-.grid-cell:hover{
-    background-color: grey;
-    opacity: 0.2;
-}
-
 .hidden{
     background-size: 0 0;
-}
-
-.ship{
-    background-color: blue;
 }
 
 .hit{
