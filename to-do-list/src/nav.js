@@ -27,9 +27,7 @@ const createNavHeader = () => {
   const createNavContent = (projects) => {
     const navContent = document.createElement('ul');
     navContent.classList.add('project-list');
-  
-    console.log(projects);
-  
+    
     const home = document.createElement('li');
     home.classList.add('project-link');
     home.id = 'home';
