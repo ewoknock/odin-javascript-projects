@@ -15,20 +15,19 @@ const editTaskDialog = document.getElementById('edit-dialog');
 const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 const newTaskForm = document.querySelector('#new-task-form');
 const editTaskForm = document.querySelector('#edit-task-form');
-
-const newTaskButton = document.getElementById('new-task-button');
-const closeButtons = document.querySelectorAll('#close-dialog-btn');
-const projectLinks = document.querySelectorAll('.project-link');
-
 const content = document.querySelector('body');
 
 const main = document.createElement('main');
-
 content.appendChild(main);
 const navbar = nav(getProjects(tasks));
 main.appendChild(navbar);
 
 loadPage('Home', tasks, bluePlus);
+
+const newTaskButton = document.getElementById('new-task-button');
+const closeButtons = document.querySelectorAll('#close-dialog-btn');
+const projectLinks = document.querySelectorAll('.project-link');
+
 
 newTaskButton.addEventListener('click', () => {
   newTaskDialog.showModal();
