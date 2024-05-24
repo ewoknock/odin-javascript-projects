@@ -1,4 +1,3 @@
-import nav from './nav';
 import {
   loadPage,
   bluePlus,
@@ -62,6 +61,12 @@ const setCollapseButtonListeners = () => {
       });
     });
   };
+  const toggleStrikethrough = (cardDetails) => {
+    const details = cardDetails.querySelectorAll('.card-content-detail-info')
+    details.forEach((element) => {
+      element.classList.toggle('strikethrough')
+    })
+  }
 
   const setCompleteCheckboxListeners = () => {
     const completeCheckboxes = document.querySelectorAll('.complete-checkbox');
@@ -69,6 +74,7 @@ const setCollapseButtonListeners = () => {
     completeCheckboxes.forEach((checkbox) => {
         checkbox.addEventListener('click', () => {
           const { index } = checkbox.dataset;
+          toggleStrikethrough(checkbox.parentElement)
           toggleCompleted(tasks, index);
           localStorage.setItem('tasks', JSON.stringify(tasks));
         });

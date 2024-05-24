@@ -31,7 +31,7 @@ const pageNav = (header) => {
   return navBar;
 };
 
-const createCardDetailInfo = (label, content) => {
+const createCardDetailInfo = (label, content, strikethrough) => {
     const detailContainer = document.createElement('div');
     detailContainer.classList.add('card-content-detail-info');
   
@@ -44,6 +44,10 @@ const createCardDetailInfo = (label, content) => {
     const containerContent = document.createElement('p');
     containerContent.innerText = content;
   
+    if(strikethrough){
+      detailContainer.classList.add('strikethrough')
+    }
+    
     detailContainer.appendChild(containerContent);
   
     return detailContainer;
@@ -59,9 +63,9 @@ const createCardHeader = (item) => {
   completedContainer.type = 'checkbox';
   completedContainer.checked = item.completed;
 
-  const titleInfo = createCardDetailInfo('', item.title);
+  const titleInfo = createCardDetailInfo('', item.title, item.completed);
 
-  const dateInfo = createCardDetailInfo('', item.dueDate);
+  const dateInfo = createCardDetailInfo('', item.dueDate, item.completed);
 
   const expandButton = document.createElement('button');
   expandButton.classList.add('collapse-button');
