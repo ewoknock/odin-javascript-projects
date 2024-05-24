@@ -13,10 +13,15 @@ const pageNav = (header) => {
   const buttonIcon = new Image();
   buttonIcon.src = AddIcon;
 
+  const newTaskDialog = document.getElementById('new-dialog');
+
   const addTaskButton = document.createElement('button');
   addTaskButton.classList.add('taskBtn');
   addTaskButton.id = 'new-task-button';
   addTaskButton.appendChild(buttonIcon);
+  addTaskButton.addEventListener('click', () => {
+    newTaskDialog.showModal();
+  });
 
   nav.appendChild(navHeader);
   nav.appendChild(addTaskButton);

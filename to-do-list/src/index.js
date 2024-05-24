@@ -22,16 +22,8 @@ content.appendChild(main);
 const navbar = nav(getProjects(tasks));
 main.appendChild(navbar);
 
-loadPage('Home', tasks, bluePlus);
-
-const newTaskButton = document.getElementById('new-task-button');
 const closeButtons = document.querySelectorAll('#close-dialog-btn');
 const projectLinks = document.querySelectorAll('.project-link');
-
-
-newTaskButton.addEventListener('click', () => {
-  newTaskDialog.showModal();
-});
 
 closeButtons.forEach((button) => {
   button.addEventListener('click', () => {
@@ -146,3 +138,4 @@ projectLinks.forEach((link) => {
 });
 
 updateEventListeners();
+loadPage('Home', tasks, bluePlus);
