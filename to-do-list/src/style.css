@@ -246,3 +246,7 @@ input:focus{
 .card-content-details{
     display: none;
 }
+
+.strikethrough{
+    text-decoration: line-through;
+}

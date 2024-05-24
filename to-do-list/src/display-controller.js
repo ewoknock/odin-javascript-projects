@@ -1,3 +1,5 @@
+import nav from "./nav"
+import { getProjects } from "./tasks";
 import AddIcon from './images/icons8-add-50.png';
 import EditIcon from './images/icons8-edit-32.png';
 
@@ -5,7 +7,7 @@ const bluePlus = '\u2295';
 const blueMinus = '\u2296';
 
 const pageNav = (header) => {
-  const nav = document.createElement('nav');
+  const navBar = document.createElement('nav');
 
   const navHeader = document.createElement('h2');
   navHeader.innerText = header;
@@ -23,13 +25,13 @@ const pageNav = (header) => {
     newTaskDialog.showModal();
   });
 
-  nav.appendChild(navHeader);
-  nav.appendChild(addTaskButton);
+  navBar.appendChild(navHeader);
+  navBar.appendChild(addTaskButton);
 
-  return nav;
+  return navBar;
 };
 
-const createCardDetailInfo = (label, content) => {
+const createCardDetailInfo = (label, content, strikethrough) => {
     const detailContainer = document.createElement('div');
     detailContainer.classList.add('card-content-detail-info');
   
@@ -42,6 +44,10 @@ const createCardDetailInfo = (label, content) => {
     const containerContent = document.createElement('p');
     containerContent.innerText = content;
   
+    if(strikethrough){
+      detailContainer.classList.add('strikethrough')
+    }
+    
     detailContainer.appendChild(containerContent);
   
     return detailContainer;
@@ -57,9 +63,9 @@ const createCardHeader = (item) => {
   completedContainer.type = 'checkbox';
   completedContainer.checked = item.completed;
 
-  const titleInfo = createCardDetailInfo('', item.title);
+  const titleInfo = createCardDetailInfo('', item.title, item.completed);
 
-  const dateInfo = createCardDetailInfo('', item.dueDate);
+  const dateInfo = createCardDetailInfo('', item.dueDate, item.completed);
 
   const expandButton = document.createElement('button');
   expandButton.classList.add('collapse-button');
@@ -127,7 +133,10 @@ const populateTasks = (arr) => {
 
 const loadPage = (title, arr) => {
     const main = document.querySelector('main');
+    const projectTasks = JSON.parse(localStorage.getItem('tasks')) || [];
   
+    const sidebar = nav(getProjects(projectTasks));
+    main.appendChild(sidebar); 
     let content = document.querySelector('section');
   
     if (main.contains(content)) {

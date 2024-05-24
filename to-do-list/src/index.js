@@ -1,4 +1,3 @@
-import nav from './nav';
 import {
   loadPage,
   bluePlus,
@@ -6,7 +5,7 @@ import {
   populateDialog,
 } from './display-controller';
 import {
-  taskFactory, toggleCompleted, getProjects, filterTasksByProject,
+  taskFactory, toggleCompleted, filterTasksByProject,
 } from './tasks';
 import './style.css';
 
@@ -19,11 +18,10 @@ const content = document.querySelector('body');
 
 const main = document.createElement('main');
 content.appendChild(main);
-const navbar = nav(getProjects(tasks));
-main.appendChild(navbar);
+// const navbar = nav(getProjects(tasks));
+// main.appendChild(navbar);
 
 const closeButtons = document.querySelectorAll('#close-dialog-btn');
-const projectLinks = document.querySelectorAll('.project-link');
 
 closeButtons.forEach((button) => {
   button.addEventListener('click', () => {
@@ -63,6 +61,12 @@ const setCollapseButtonListeners = () => {
       });
     });
   };
+  const toggleStrikethrough = (cardDetails) => {
+    const details = cardDetails.querySelectorAll('.card-content-detail-info')
+    details.forEach((element) => {
+      element.classList.toggle('strikethrough')
+    })
+  }
 
   const setCompleteCheckboxListeners = () => {
     const completeCheckboxes = document.querySelectorAll('.complete-checkbox');
@@ -70,18 +74,40 @@ const setCollapseButtonListeners = () => {
     completeCheckboxes.forEach((checkbox) => {
         checkbox.addEventListener('click', () => {
           const { index } = checkbox.dataset;
+          toggleStrikethrough(checkbox.parentElement)
           toggleCompleted(tasks, index);
           localStorage.setItem('tasks', JSON.stringify(tasks));
         });
       });
       
   }
+
   
+
 const updateEventListeners = () => {
     setCollapseButtonListeners();
     setEditButtonListeners();
     setCompleteCheckboxListeners();
   };
+
+  const setProjectLinkListeners = () => {
+    const projectLinks = document.querySelectorAll('.project-link');
+
+    projectLinks.forEach((link) => {
+      link.addEventListener(('click'), () => {
+        const project = link.textContent;
+        if (project === 'Home') {
+          loadPage(project, tasks, bluePlus);
+          updateEventListeners();
+          setProjectLinkListeners();
+        } else {
+          loadPage(project, filterTasksByProject(tasks, project), bluePlus);
+          updateEventListeners();
+          setProjectLinkListeners();
+        }
+      });
+    });
+  }
 
 newTaskForm.addEventListener('submit', (event) => {
   event.preventDefault();
@@ -101,6 +127,7 @@ newTaskForm.addEventListener('submit', (event) => {
   newTaskDialog.close();
   loadPage(project, filterTasksByProject(tasks, project), bluePlus);
   updateEventListeners();
+  setProjectLinkListeners();
 });
 
 editTaskForm.addEventListener('submit', (event) => {
@@ -122,20 +149,9 @@ editTaskForm.addEventListener('submit', (event) => {
   editTaskDialog.close();
   loadPage(project, filterTasksByProject(tasks, project), bluePlus);
   updateEventListeners();
+  setProjectLinkListeners();
 });
 
-projectLinks.forEach((link) => {
-  link.addEventListener(('click'), () => {
-    const project = link.textContent;
-    if (project === 'Home') {
-      loadPage(project, tasks, bluePlus);
-      updateEventListeners();
-    } else {
-      loadPage(project, filterTasksByProject(tasks, project), bluePlus);
-      updateEventListeners();
-    }
-  });
-});
-
-updateEventListeners();
 loadPage('Home', tasks, bluePlus);
+updateEventListeners();
+setProjectLinkListeners();

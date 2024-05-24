@@ -17,8 +17,6 @@ const getProjects = (arr) => {
 }
 
 const toggleCompleted = (arr, index) => {
-    console.log(arr);
-    console.log(index);
     arr[index].completed = !arr[index].completed;   
 }
 

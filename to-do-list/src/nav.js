@@ -25,7 +25,7 @@ const createNavHeader = () => {
   };
 
   const createNavContent = (projects) => {
-    const navContent = document.createElement('ul');
+    const navContent = document.createElement('ul')
     navContent.classList.add('project-list');
     
     const home = document.createElement('li');
@@ -38,13 +38,18 @@ const createNavHeader = () => {
     projects.forEach((project) => {
       navContent.appendChild(createProjectLink(project));
     });
-  
     return navContent;
   };
   
+  
 const nav = (projects) => {
-  const sideBar = document.createElement('aside');
-  sideBar.id = 'sidebar';
+  let sideBar = document.querySelector('aside');
+  if(sideBar === null){
+    sideBar = document.createElement('aside');
+    sideBar.id = 'sidebar';
+  }else{
+    sideBar.innerHTML = ''
+  }
 
   sideBar.appendChild(createNavHeader());
   sideBar.appendChild(createNavContent(projects));
