@@ -32,11 +32,12 @@ html{
 
 body{
     background-color: var(--color-primary);
+    padding-bottom: 0.1rem;
 }
 
 main{
     display: flex;
-    height: 90vh;
+    height: fit-content;
     width: 90%;
     margin: 3rem auto;
     border-radius: var(--border-radius);
@@ -91,7 +92,7 @@ main{
 }
 
 .container{
-    height: 90vh;
+    height: fit-content;
     width: 100%;
     margin-top: 4rem;
     padding: 0 3.5rem;
